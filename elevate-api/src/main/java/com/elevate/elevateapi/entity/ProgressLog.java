@@ -20,13 +20,20 @@ public class ProgressLog {
     private double weight;
     private int reps;
 
+    public ProgressLog() {}
+
     public enum LiftType{
         BENCH_PRESS,
         SQUAT,
         DEADLIFT,
-        DUMBELL_PRESS,
+        DUMBBELL_PRESS,
         PULL_UPS,
         DIPS
     }
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 }

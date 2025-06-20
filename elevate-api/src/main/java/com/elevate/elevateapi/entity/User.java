@@ -3,6 +3,8 @@ package com.elevate.elevateapi.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -61,4 +63,11 @@ public class User {
 
     public User() {}
 
+    /*
+    - user field in ProgressLog has the fk
+    - cascade: deleting a user, deletes the progress log for that user
+    - orphan removal: removing a log removes it from list, removes it from db
+    */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProgressLog> progressLogList = new ArrayList<>();
 }
