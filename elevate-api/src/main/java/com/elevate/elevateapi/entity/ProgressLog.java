@@ -1,9 +1,18 @@
 package com.elevate.elevateapi.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "progress_log")
 public class ProgressLog {
@@ -17,10 +26,8 @@ public class ProgressLog {
 
     private LocalDate date;
     private String variation; // eg weighted for dips or inclined for db press
-    private double weight;
+    private double weightKg;
     private int reps;
-
-    public ProgressLog() {}
 
     public enum LiftType{
         BENCH_PRESS,
@@ -30,7 +37,6 @@ public class ProgressLog {
         PULL_UPS,
         DIPS
     }
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
