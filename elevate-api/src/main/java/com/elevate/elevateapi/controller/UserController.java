@@ -27,9 +27,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(RegisterUserRequest request){
+    public ResponseEntity<String> register(@RequestBody RegisterUserRequest request){
         userService.registerUser(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body("account created");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Account created");
     }
 
 
@@ -41,6 +41,15 @@ public class UserController {
 
 
     @DeleteMapping("{id}")
-    public void deleteUser(@PathVariable("id") Long id){}
+    public  ResponseEntity<String> deleteUser(@PathVariable("id") Long id){
+        boolean accountDeleted = userService.deleteUser(id);
+        if (accountDeleted){
+            return ResponseEntity.status(HttpStatus.CREATED).body("Account deleted");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+    }
 
 }
