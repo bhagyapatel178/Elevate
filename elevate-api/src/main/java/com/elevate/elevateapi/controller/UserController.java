@@ -1,12 +1,14 @@
 package com.elevate.elevateapi.controller;
 
+import com.elevate.elevateapi.dto.LoginUserRequest;
 import com.elevate.elevateapi.dto.RegisterUserRequest;
-import com.elevate.elevateapi.repository.UserRepository;
+import com.elevate.elevateapi.dto.UserProfileResponse;
 import com.elevate.elevateapi.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -32,24 +34,36 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Account created");
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<Map<String,String>> login(@RequestBody LoginUserRequest loginUserRequest){
+        String token =  userService.verify(loginUserRequest);
+        return ResponseEntity.ok(Map.of("token", token));
+    }
 
     @PutMapping("{id}")
     public void editUser(@PathVariable("id") Long id){}
 
     @GetMapping("{id}")
-    public void getUser(@PathVariable("id") Long id){}
+    public ResponseEntity<UserProfileResponse> getUser(@PathVariable("id") Long id){
+        boolean accountExists = userService.exists(id);
+        if (accountExists){
+            return ResponseEntity.ok(userService.getUser(id));
+        }
+        else{
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
     @DeleteMapping("{id}")
     public  ResponseEntity<String> deleteUser(@PathVariable("id") Long id){
         boolean accountDeleted = userService.deleteUser(id);
         if (accountDeleted){
-            return ResponseEntity.status(HttpStatus.CREATED).body("Account deleted");
+            return ResponseEntity.ok("Account deleted");
         }
         else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
-
     }
 
 }
