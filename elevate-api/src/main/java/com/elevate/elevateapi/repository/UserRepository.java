@@ -6,4 +6,6 @@ import com.elevate.elevateapi.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    User findByUsername(String username);
 }

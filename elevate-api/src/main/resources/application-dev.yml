@@ -6,4 +6,6 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
+jwt:
+  secret: b5i2nc9E4Awb0cT3xYvF3xKk0wVjaXcqcIUe25Rk6ZE=   # 256-bit base64
