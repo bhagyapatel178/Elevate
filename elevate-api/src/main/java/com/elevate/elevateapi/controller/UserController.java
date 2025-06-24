@@ -2,6 +2,7 @@ package com.elevate.elevateapi.controller;
 
 import com.elevate.elevateapi.dto.LoginUserRequest;
 import com.elevate.elevateapi.dto.RegisterUserRequest;
+import com.elevate.elevateapi.dto.UpdateUserRequest;
 import com.elevate.elevateapi.dto.UserProfileResponse;
 import com.elevate.elevateapi.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,10 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public void editUser(@PathVariable("id") Long id){}
+    public ResponseEntity<String> editUser(@PathVariable("id") Long id, @RequestBody UpdateUserRequest updateUserRequest){
+        userService.editUser(id, updateUserRequest);
+        return ResponseEntity.ok("Account details updated");
+    }
 
     @GetMapping("{id}")
     public ResponseEntity<UserProfileResponse> getUser(@PathVariable("id") Long id){
@@ -53,7 +57,6 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
-
 
     @DeleteMapping("{id}")
     public  ResponseEntity<String> deleteUser(@PathVariable("id") Long id){
