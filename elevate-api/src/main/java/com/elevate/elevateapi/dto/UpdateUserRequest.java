@@ -4,8 +4,8 @@ public record UpdateUserRequest (
         String username,
         String email,
         String gender,
-        int age,
+        Integer age,
         String preferredUnitSystem,
-        double height,
-        double weight
+        Double height,
+        Double weight
 ){}
