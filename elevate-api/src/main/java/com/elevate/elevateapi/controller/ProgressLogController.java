@@ -4,9 +4,11 @@ import com.elevate.elevateapi.dto.CreateProgressLogRequest;
 import com.elevate.elevateapi.dto.ProgressLogResponse;
 import com.elevate.elevateapi.dto.UpdateProgressLogRequest;
 import com.elevate.elevateapi.dto.UpdateUserRequest;
+import com.elevate.elevateapi.entity.UserPrincipal;
 import com.elevate.elevateapi.service.ProgressLogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,9 +27,9 @@ public class ProgressLogController {
      * GET /api/progress-logs/{id}    - get log information
      * DELETE /api/progress-logs/{id} - delete a log
      * */
-    @PostMapping("")
-    public ResponseEntity<String> addLog (@RequestBody CreateProgressLogRequest createProgressLogRequest){
-        progressLogService.addLog(createProgressLogRequest);
+    @PostMapping
+    public ResponseEntity<String> addLog (@AuthenticationPrincipal UserPrincipal me, @RequestBody CreateProgressLogRequest createProgressLogRequest){
+        progressLogService.addLog(me.getUsername(),createProgressLogRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body("Progress Log created");
     }
 
@@ -40,8 +42,8 @@ public class ProgressLogController {
 
     @GetMapping("{id}")
     public ResponseEntity<ProgressLogResponse> getLog (@PathVariable("id") Long id){
-        boolean accountExists = progressLogService.exists(id);
-        if (accountExists){
+        boolean logExists = progressLogService.exists(id);
+        if (logExists){
             return ResponseEntity.ok(progressLogService.getLog(id));
         }
         else{
