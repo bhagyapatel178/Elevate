@@ -2,6 +2,7 @@ package com.elevate.elevateapi.service;
 
 import com.elevate.elevateapi.dto.LoginUserRequest;
 import com.elevate.elevateapi.dto.RegisterUserRequest;
+import com.elevate.elevateapi.dto.UpdateUserRequest;
 import com.elevate.elevateapi.dto.UserProfileResponse;
 import com.elevate.elevateapi.entity.User;
 import com.elevate.elevateapi.repository.UserRepository;
@@ -58,6 +59,19 @@ public class UserService {
                 user.getHeight(),
                 user.getWeight()
         );
+    }
+
+    public void editUser(Long id, UpdateUserRequest updateUserRequest) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        if (updateUserRequest.username() != null) user.setUsername(updateUserRequest.username());
+        if (updateUserRequest.email() != null) user.setEmail(updateUserRequest.email());
+        if (updateUserRequest.gender() != null) user.setGender(User.GenderType.valueOf(updateUserRequest.gender()));
+        if (updateUserRequest.age() != null) user.setAge(updateUserRequest.age());
+        if (updateUserRequest.preferredUnitSystem() != null) user.setPreferredUnitSystem(User.MeasurementUnitSystem.valueOf(updateUserRequest.preferredUnitSystem()));
+        if (updateUserRequest.height() != null) user.setHeight(updateUserRequest.height());
+        if (updateUserRequest.weight() != null) user.setWeight(updateUserRequest.weight());
+        userRepository.save(user);
     }
 
     public String verify (LoginUserRequest loginUserRequest){
