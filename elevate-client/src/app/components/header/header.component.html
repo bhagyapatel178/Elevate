@@ -1,8 +1,10 @@
 <nav>
   <a routerLink="/">Home</a>
   <a routerLink="/profile">Profile</a>
-  <a routerLink="/register">Register</a>
-  <a routerLink="/login">Login</a>
+  <a routerLink="/register" *ngIf="!auth.isLoggedin()">Register</a>
+  <a routerLink="/login" *ngIf="!auth.isLoggedin()">Login</a>
+
+  <button *ngIf="auth.isLoggedin()" (click)="logout()">Logout</button>
 </nav>
 
 <style>
