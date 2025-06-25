@@ -30,9 +30,10 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterUserRequest request){
+    public ResponseEntity<Map<String, String>> register(@RequestBody RegisterUserRequest request){
         userService.registerUser(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Account created");
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(Map.of("message", "Account created"));
     }
 
     @PostMapping("/login")

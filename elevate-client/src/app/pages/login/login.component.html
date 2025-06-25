@@ -1,1 +1,11 @@
-<p>login works!</p>
+<h2>Login</h2>
+
+<form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+  <input type='text' placeholder = 'username' [(ngModel)]="credentials.username" name ='username' required><br>
+  <input [type] = "showPassword? 'text': 'password'" placeholder = 'password ' [(ngModel)]="credentials.password" name ='password' required>
+  <button type="button" (click)="showPassword = !showPassword">
+    {{showPassword?'Hide': 'Show'}}
+  </button>
+  <br>
+  <button type='submit'>Login</button>
+</form>
