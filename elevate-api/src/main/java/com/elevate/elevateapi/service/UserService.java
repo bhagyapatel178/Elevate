@@ -67,10 +67,10 @@ public class UserService {
         if (updateUserRequest.username() != null) user.setUsername(updateUserRequest.username());
         if (updateUserRequest.email() != null) user.setEmail(updateUserRequest.email());
         if (updateUserRequest.gender() != null) user.setGender(User.GenderType.valueOf(updateUserRequest.gender()));
-        if (updateUserRequest.age() != 0) user.setAge(updateUserRequest.age());
+        if (updateUserRequest.age() != null) user.setAge(updateUserRequest.age());
         if (updateUserRequest.preferredUnitSystem() != null) user.setPreferredUnitSystem(User.MeasurementUnitSystem.valueOf(updateUserRequest.preferredUnitSystem()));
-        if (updateUserRequest.height() != 0) user.setHeight(updateUserRequest.height());
-        if (updateUserRequest.weight() != 0) user.setWeight(updateUserRequest.weight());
+        if (updateUserRequest.height() != null) user.setHeight(updateUserRequest.height());
+        if (updateUserRequest.weight() != null) user.setWeight(updateUserRequest.weight());
         userRepository.save(user);
     }
 
