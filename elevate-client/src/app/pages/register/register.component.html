@@ -1,0 +1,27 @@
+<h2>Register</h2>
+
+<form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+  <div *ngIf="username.invalid && username.touched" style="color:red">
+    Username must be 5–20 characters.
+  </div>
+  <input type='text' placeholder='username' [(ngModel)]="formData.username" name='username'
+         required minlength="5" maxlength="20"
+         #username="ngModel"><br>
+
+  <div *ngIf="email.invalid && email.touched" style="color:red">
+    Valid email required.
+  </div>
+  <input type='email' placeholder='email' [(ngModel)]="formData.email" name='email'
+         required
+         #email="ngModel"><br>
+
+  <div *ngIf="password.invalid && password.touched" style="color:red">
+    Password must be at least 5 characters.
+  </div>
+  <input [type]="showPassword ? 'text' : 'password'" placeholder='password' [(ngModel)]="formData.password" name='password'
+           required minlength="5"
+           #password="ngModel">
+  <button type="button" (click)="showPassword = !showPassword">{{ showPassword ? 'Hide' : 'Show' }}</button><br>
+
+  <button type='submit' [disabled]="registerForm.invalid">Register</button>
+</form>

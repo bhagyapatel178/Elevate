@@ -330,3 +330,8 @@ dist
 .svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,node,angular,intellij
+
+
+# --- Angular client ---------------------------------
+elevate-client/node_modules
+elevate-client/.angular
