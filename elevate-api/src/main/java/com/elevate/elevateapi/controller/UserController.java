@@ -97,7 +97,6 @@ public class UserController {
     @GetMapping("/me/logs")
     public ResponseEntity<List<ProgressLogResponse>> getLogs(@AuthenticationPrincipal UserDetails userDetails) {
         String username = userDetails.getUsername();
-        System.out.println(username);
 
         boolean accountExists = userService.existsByUsername(username);
         if (accountExists) {

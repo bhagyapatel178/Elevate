@@ -31,7 +31,7 @@
 <h3>Progress Logs</h3>
 <ul>
   <li *ngFor="let log of progressLogs">
-    {{ log.liftType }} - {{ log.variation }} - {{ log.weight }}kg {{ log.reps }} reps on {{ log.date }}
+    {{ getLiftOutput(log.liftType) }} - {{ log.variation }} - {{ log.weight }}kg {{ log.reps }} reps on {{ log.date }}
   </li>
 </ul>
 

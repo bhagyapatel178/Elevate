@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {CommonModule, NgIf} from '@angular/common';
+import {log} from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
 
 
 interface ProgressLog {
@@ -60,17 +61,32 @@ export class ProfileComponent implements  OnInit{
     this.fetchLogs();
   }
 
+  getLiftOutput(liftType: string){
+    if (liftType == 'BENCH_PRESS'){return 'Bench Press'}
+    if (liftType == 'SQUAT'){return 'Squat'}
+    if (liftType == 'DEADLIFT'){return 'Deadlift'}
+    if (liftType == 'DUMBBELL_PRESS'){return 'Dumbbell Press'}
+    if (liftType == 'PULL_UPS'){return 'Pull Ups'}
+    if (liftType == 'DIPS'){return 'Dips'}
+    return ''
+  }
   createLog(){
     this.http.post('api/progress-logs', this.newLog).subscribe({
-      next: () => this.fetchLogs(),
-      error: err => alert('Error creating log')
+      next: () => {
+        this.fetchLogs();
+      },
+      error: err => {
+        alert(err.error?.message || 'Unexpected error creating log');
+      }
+
     })
   }
 
   fetchLogs(){
     this.http.get<any>('/api/users/me/logs').subscribe({
       next: (res: any) => this.progressLogs = res,
-      error: err => alert('Error fetching logs')
+      error: err => alert('Error fetching logs'),
+
     })
   }
 
