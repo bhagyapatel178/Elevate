@@ -1,14 +1,10 @@
 import { Routes } from '@angular/router';
-import {HomeComponent} from './home/home.component';
-import {RegisterComponent} from './pages/register/register.component';
-import {LoginComponent} from './pages/login/login.component';
-import {ProfileComponent} from './pages/profile/profile.component';
+import {authGuard} from './auth.guard';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent},
-  { path: 'register', component: RegisterComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'profile', component: ProfileComponent},
-
+  { path: '', loadComponent:()=> import('../app/home/home.component').then(m=> m.HomeComponent)},
+  { path: 'register', loadComponent:()=> import('../app/pages/register/register.component').then(m=> m.RegisterComponent)},
+  { path: 'login', loadComponent:()=> import('../app/pages/login/login.component').then(m=> m.LoginComponent)},
+  { path: 'profile', loadComponent:()=> import('../app/pages/profile/profile.component').then(m=> m.ProfileComponent), canActivate: [authGuard]},
 
 ];

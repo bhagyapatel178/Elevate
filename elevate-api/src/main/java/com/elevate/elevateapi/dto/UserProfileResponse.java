@@ -8,5 +8,5 @@ public record UserProfileResponse (
         String preferredUnitSystem,
         Double height,
         Double weight
-
 ){}
+

@@ -9,7 +9,10 @@ import com.elevate.elevateapi.service.ProgressLogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/progress-logs")
@@ -28,9 +31,10 @@ public class ProgressLogController {
      * DELETE /api/progress-logs/{id} - delete a log
      * */
     @PostMapping
-    public ResponseEntity<String> addLog (@AuthenticationPrincipal UserPrincipal me, @RequestBody CreateProgressLogRequest createProgressLogRequest){
-        progressLogService.addLog(me.getUsername(),createProgressLogRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Progress Log created");
+    public ResponseEntity<Map<String, String>> addLog (@AuthenticationPrincipal UserDetails userDetails, @RequestBody CreateProgressLogRequest createProgressLogRequest) {
+        String username = userDetails.getUsername();
+        progressLogService.addLog(username,createProgressLogRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Progress Log created"));
     }
 
     @PutMapping("{id}")
