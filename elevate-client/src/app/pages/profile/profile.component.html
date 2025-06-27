@@ -1,37 +1,40 @@
 <H2>Profile</H2>
 
-<p>Username: {{userProfile.username}}</p>
-<p>Email: {{userProfile.email}}</p>
-<p>Gender: {{userProfile.gender}}</p>
-<p>Age: {{userProfile.age}}</p>
-<p>Units: {{userProfile.preferredUnitSystem}}</p>
-<p>Weight: {{userProfile.weight}}</p>
-<p>Height: {{userProfile.height}}</p>
+
+<div *ngIf="userProfile.username;">
+  <p>Username: {{userProfile.username}}</p>
+  <p>Email: {{userProfile.email}}</p>
+  <p>Gender: {{userProfile.gender}}</p>
+  <p>Age: {{userProfile.age}}</p>
+  <p>Units: {{userProfile.preferredUnitSystem}}</p>
+  <p>Weight: {{userProfile.weight}}</p>
+  <p>Height: {{userProfile.height}}</p>
 
 
 
-<h3>Add New Log</h3>
-<form (ngSubmit)="createLog()">
-  <select name="liftType" [(ngModel)]="newLog.liftType" required>
-    <option value="" disabled selected hidden>Select Lift</option>
-    <option [value]="'BENCH_PRESS'">Bench Press</option>
-    <option [value]="'SQUAT'">Squat</option>
-    <option [value]="'DEADLIFT'">Deadlift</option>
-    <option [value]="'DUMBBELL_PRESS'">Dumbbell Press</option>
-    <option [value]="'PULL_UPS'">Pull Ups</option>
-    <option [value]="'DIPS'">Dips</option>
-  </select>
+  <h3>Add New Log</h3>
+  <form (ngSubmit)="createLog()" #registerForm="ngForm">
+    <select name="liftType" [(ngModel)]="newLog.liftType" required>
+      <option value="" disabled selected hidden>Select Lift</option>
+      <option [value]="'BENCH_PRESS'">Bench Press</option>
+      <option [value]="'SQUAT'">Squat</option>
+      <option [value]="'DEADLIFT'">Deadlift</option>
+      <option [value]="'DUMBBELL_PRESS'">Dumbbell Press</option>
+      <option [value]="'PULL_UPS'">Pull Ups</option>
+      <option [value]="'DIPS'">Dips</option>
+    </select>
 
-  <input type="text" placeholder="Variation" [(ngModel)]="newLog.variation" name="variation" required>
-  <input type="number" placeholder="Weight (kg)" [(ngModel)]="newLog.weight" name="weight" required>
-  <input type="number" placeholder="Reps" [(ngModel)]="newLog.reps" name="reps" required>
-  <button type="submit">Add Log</button>
-</form>
+    <input type="text" placeholder="Variation" [(ngModel)]="newLog.variation" name="variation" required>
+    <input type="number" placeholder="Weight (kg)" [(ngModel)]="newLog.weight" name="weight" required>
+    <input type="number" placeholder="Reps" [(ngModel)]="newLog.reps" name="reps" required>
+    <button type="submit">Add Log</button>
+  </form>
 
-<h3>Progress Logs</h3>
-<ul>
-  <li *ngFor="let log of progressLogs">
-    {{ getLiftOutput(log.liftType) }} - {{ log.variation }} - {{ log.weight }}kg {{ log.reps }} reps on {{ log.date }}
-  </li>
-</ul>
+  <h3>Progress Logs</h3>
+  <ul>
+    <li *ngFor="let log of progressLogs">
+      {{ getLiftOutput(log.liftType) }} - {{ log.variation }} - {{ log.weight }}kg {{ log.reps }} reps on {{ log.date }}
+    </li>
+  </ul>
 
+</div>

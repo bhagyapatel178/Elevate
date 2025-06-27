@@ -74,6 +74,12 @@ export class ProfileComponent implements  OnInit{
     this.http.post('api/progress-logs', this.newLog).subscribe({
       next: () => {
         this.fetchLogs();
+        this.newLog = {
+          liftType: '',
+          variation: '',
+          weight: null,
+          reps: null
+        };
       },
       error: err => {
         alert(err.error?.message || 'Unexpected error creating log');
