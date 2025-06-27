@@ -1,4 +1,8 @@
 <nav>
+  <a class="logo-container" routerLink="/">
+    <img src="/logo.png" alt="" class="logo" />
+    <h2>Elevate</h2>
+  </a>
   <a routerLink="/">Home</a>
   <a routerLink="/profile">Profile</a>
   <a routerLink="/register" *ngIf="!auth.isLoggedin()">Register</a>
@@ -6,8 +10,3 @@
 
   <button *ngIf="auth.isLoggedin()" (click)="logout()">Logout</button>
 </nav>
-
-<style>
-  a{text-decoration: none;
-  padding: 2%}
-</style>

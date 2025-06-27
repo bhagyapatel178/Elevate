@@ -1,0 +1,21 @@
+form {
+  max-width: 500px;
+  margin: 2rem auto;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  input,
+  select {
+    margin-bottom: 1rem;
+  }
+
+  div {
+    margin-bottom: 0.5rem;
+  }
+
+  button {
+    margin-top: 1rem;
+  }
+}
