@@ -1,14 +1,15 @@
 package com.elevate.elevateapi.controller;
 
-import com.elevate.elevateapi.dto.LoginUserRequest;
-import com.elevate.elevateapi.dto.RegisterUserRequest;
-import com.elevate.elevateapi.dto.UpdateUserRequest;
-import com.elevate.elevateapi.dto.UserProfileResponse;
+import com.elevate.elevateapi.dto.*;
+import com.elevate.elevateapi.entity.ProgressLog;
 import com.elevate.elevateapi.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -59,6 +60,29 @@ public class UserController {
         }
     }
 
+    @GetMapping("me")
+    public ResponseEntity<UserProfileResponse> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+
+        boolean accountExists = userService.existsByUsername(username);
+        if (accountExists) {
+            return ResponseEntity.ok(userService.getUserByUsername(username));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+//    @GetMapping("me")
+//    public ResponseEntity<UserProfileResponse> getUserbyUsername(@RequestBody String username){
+//        boolean accountExists = userService.existsByUsername(username);
+//        if (accountExists){
+//            return ResponseEntity.ok(userService.getUserByUsername(username));
+//        }
+//        else{
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
+
     @DeleteMapping("{id}")
     public  ResponseEntity<String> deleteUser(@PathVariable("id") Long id){
         boolean accountDeleted = userService.deleteUser(id);
@@ -67,6 +91,19 @@ public class UserController {
         }
         else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+
+    @GetMapping("/me/logs")
+    public ResponseEntity<List<ProgressLogResponse>> getLogs(@AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+        System.out.println(username);
+
+        boolean accountExists = userService.existsByUsername(username);
+        if (accountExists) {
+            return ResponseEntity.ok(userService.getLogs(username));
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 

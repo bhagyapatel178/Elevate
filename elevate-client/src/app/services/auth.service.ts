@@ -15,5 +15,8 @@ export class AuthService {
     localStorage.removeItem('token')
   }
 
+  getAuthToken():string | null {
+    return localStorage.getItem('token')
+  }
 
 }
