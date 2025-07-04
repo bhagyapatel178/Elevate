@@ -10,6 +10,8 @@ import com.elevate.elevateapi.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class ProgressLogService {
 
@@ -30,6 +32,7 @@ public class ProgressLogService {
         progressLog.setVariation(createProgressLogRequest.variation());
         progressLog.setWeightKg(createProgressLogRequest.weight());
         progressLog.setReps(createProgressLogRequest.reps());
+        progressLog.setDate(LocalDate.now());
         progressLogRepository.save(progressLog);
     }
 
