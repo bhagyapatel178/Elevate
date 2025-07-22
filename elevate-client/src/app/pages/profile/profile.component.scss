@@ -7,15 +7,25 @@ div {
   //box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
   p {
-    margin: 0.5rem 0;
+    margin: 1rem 0;
+    padding-bottom: 0rem;
+  }
+
+  h3{
+    padding-top: 2rem;
+    margin: 0;
   }
 
   form {
-    margin-top: 2rem;
+    margin-top: 1rem;
 
     select,
     input {
       margin-bottom: 1rem;
+    }
+    button{
+      padding: 0;
+      
     }
   }
 

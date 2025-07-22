@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {CommonModule, NgIf} from '@angular/common';
-import {log} from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
 
 
 interface ProgressLog {
@@ -70,6 +69,15 @@ export class ProfileComponent implements  OnInit{
     if (liftType == 'DIPS'){return 'Dips'}
     return ''
   }
+
+  isNull(biometric: string){
+    return biometric !== '';
+  }
+
+  // notTouched(biometric: number){
+  //   return ) === 0;
+  // }
+
   createLog(){
     this.http.post('api/progress-logs', this.newLog).subscribe({
       next: () => {

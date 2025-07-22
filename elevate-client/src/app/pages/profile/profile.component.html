@@ -2,12 +2,11 @@
   <h2>Profile</h2>
   <p>Username: {{userProfile.username}}</p>
   <p>Email: {{userProfile.email}}</p>
-  <p>Gender: {{userProfile.gender}}</p>
-  <p>Age: {{userProfile.age}}</p>
-  <p>Units: {{userProfile.preferredUnitSystem}}</p>
-  <p>Weight: {{userProfile.weight}}</p>
-  <p>Height: {{userProfile.height}}</p>
-
+  <p *ngIf="userProfile.gender">Gender: {{userProfile.gender}}</p>
+  <p *ngIf="userProfile.age">Age: {{userProfile.age}}</p>
+  <p *ngIf="userProfile.preferredUnitSystem">Units: {{userProfile.preferredUnitSystem}}</p>
+  <p *ngIf="userProfile.weight">Weight: {{userProfile.weight}}</p>
+  <p *ngIf="userProfile.height">Height: {{userProfile.height}}</p>
 
 
   <h3>Add New Log</h3>
@@ -31,7 +30,7 @@
   <h3>Progress Logs</h3>
   <ul>
     <li *ngFor="let log of progressLogs">
-      {{ getLiftOutput(log.liftType) }} - {{ log.variation }} - {{ log.weight }}kg {{ log.reps }} reps on {{ log.date }}
+      {{ getLiftOutput(log.liftType) }}  {{ log.variation }} - {{ log.weight }}kg {{ log.reps }} reps on {{ log.date }}
     </li>
   </ul>
 
