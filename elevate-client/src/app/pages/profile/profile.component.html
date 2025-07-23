@@ -1,20 +1,12 @@
 <div *ngIf="userProfile.username;">
   <h2>Profile</h2>
-<!--  <p>Username: {{userProfile.username}}</p>-->
-<!--  <p>Email: {{userProfile.email}}</p>-->
-<!--  <p *ngIf="userProfile.gender">Gender: {{userProfile.gender}}</p>-->
-<!--  <p *ngIf="userProfile.age">Age: {{userProfile.age}}</p>-->
-<!--  <p *ngIf="userProfile.preferredUnitSystem">Units: {{userProfile.preferredUnitSystem}}</p>-->
-<!--  <p *ngIf="userProfile.weight">Weight: {{userProfile.weight}}</p>-->
-<!--  <p *ngIf="userProfile.height">Height: {{userProfile.height}}</p>-->
-
 
   <div *ngIf="!isEditing" class="profile-info">
     <p>Username: {{ userProfile.username }}</p>
     <p>Email: {{ userProfile.email }}</p>
-    <p *ngIf="userProfile.gender">Gender: {{ userProfile.gender }}</p>
+    <p *ngIf="userProfile.gender">Gender: {{ getGenderLabel(userProfile.gender) }}</p>
     <p *ngIf="userProfile.age">Age: {{ userProfile.age }}</p>
-    <p *ngIf="userProfile.preferredUnitSystem">Units: {{ userProfile.preferredUnitSystem }}</p>
+    <p *ngIf="userProfile.preferredUnitSystem">Units: {{ getUnitLabel(userProfile.preferredUnitSystem) }}</p>
     <p *ngIf="userProfile.weight">Weight: {{ userProfile.weight }}</p>
     <p *ngIf="userProfile.height">Height: {{ userProfile.height }}</p>
 
@@ -81,30 +73,6 @@
     <br><br>
     <button type="submit">Submit Log</button>
   </form>
-
-
-
-
-
-
-
-<!--  <h3>Add New Log</h3>-->
-<!--  <form (ngSubmit)="createLog()" #registerForm="ngForm">-->
-<!--    <select name="liftType" [(ngModel)]="newLog.liftType" required>-->
-<!--      <option value="" disabled selected hidden>Select Lift</option>-->
-<!--      <option [value]="'BENCH_PRESS'">Bench Press</option>-->
-<!--      <option [value]="'SQUAT'">Squat</option>-->
-<!--      <option [value]="'DEADLIFT'">Deadlift</option>-->
-<!--      <option [value]="'DUMBBELL_PRESS'">Dumbbell Press</option>-->
-<!--      <option [value]="'PULL_UPS'">Pull Ups</option>-->
-<!--      <option [value]="'DIPS'">Dips</option>-->
-<!--    </select>-->
-
-<!--    <input type="text" placeholder="Variation" [(ngModel)]="newLog.variation" name="variation" required>-->
-<!--    <input type="number" placeholder="Weight (kg)" [(ngModel)]="newLog.weight" name="weight" required>-->
-<!--    <input type="number" placeholder="Reps" [(ngModel)]="newLog.reps" name="reps" required>-->
-<!--    <button type="submit">Add Log</button>-->
-<!--  </form>-->
 
   <h3>Progress Logs</h3>
   <ul>

@@ -130,13 +130,26 @@ export class ProfileComponent implements  OnInit{
   updateUser() {
     this.http.put(`/api/users/edit`, this.updatedProfile).subscribe({
       next: () => {
-        alert('Profile updated successfully');
         this.userProfile = { ...this.updatedProfile };
         this.isEditing = false;
       },
-      error: err => alert(err.error?.message || 'Update failed')
+      error: err => {
+        console.error(err);
+        alert(err.error?.message || 'Update failed')
+      }
     });
   }
+
+  getGenderLabel(value: string): string {
+    const match = this.genderOptions.find(option => option.value === value);
+    return match ? match.label : value;
+  }
+
+  getUnitLabel(value: string): string {
+    const match = this.unitOptions.find(option => option.value === value);
+    return match ? match.label : value;
+  }
+
 
 }
 

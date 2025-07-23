@@ -44,12 +44,12 @@ public class UserController {
     }
 
     @PutMapping("edit")
-    public ResponseEntity<String> editUser(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UpdateUserRequest updateUserRequest){
+    public ResponseEntity<Map<String, String>> editUser(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UpdateUserRequest updateUserRequest){
         String username = userDetails.getUsername();
         boolean accountExists = userService.existsByUsername(username);
         if(accountExists){
             userService.editUser(username, updateUserRequest);
-            return ResponseEntity.ok("Account details updated");
+            return ResponseEntity.ok(Map.of("message","Account details updated"));
         }else {
             return ResponseEntity.notFound().build();
         }
