@@ -25,6 +25,9 @@ public class ProgressLogService {
 
     public void addLog(String username, CreateProgressLogRequest createProgressLogRequest) {
         User user = userRepository.findByUsername(username);
+        if (createProgressLogRequest.reps() == null || createProgressLogRequest.weight() == null) {
+            throw new IllegalArgumentException("Weight and reps are required");
+        }
 
         ProgressLog progressLog = new ProgressLog();
         progressLog.setUser(user);

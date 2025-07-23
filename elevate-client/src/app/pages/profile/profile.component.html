@@ -1,12 +1,57 @@
 <div *ngIf="userProfile.username;">
   <h2>Profile</h2>
-  <p>Username: {{userProfile.username}}</p>
-  <p>Email: {{userProfile.email}}</p>
-  <p *ngIf="userProfile.gender">Gender: {{userProfile.gender}}</p>
-  <p *ngIf="userProfile.age">Age: {{userProfile.age}}</p>
-  <p *ngIf="userProfile.preferredUnitSystem">Units: {{userProfile.preferredUnitSystem}}</p>
-  <p *ngIf="userProfile.weight">Weight: {{userProfile.weight}}</p>
-  <p *ngIf="userProfile.height">Height: {{userProfile.height}}</p>
+<!--  <p>Username: {{userProfile.username}}</p>-->
+<!--  <p>Email: {{userProfile.email}}</p>-->
+<!--  <p *ngIf="userProfile.gender">Gender: {{userProfile.gender}}</p>-->
+<!--  <p *ngIf="userProfile.age">Age: {{userProfile.age}}</p>-->
+<!--  <p *ngIf="userProfile.preferredUnitSystem">Units: {{userProfile.preferredUnitSystem}}</p>-->
+<!--  <p *ngIf="userProfile.weight">Weight: {{userProfile.weight}}</p>-->
+<!--  <p *ngIf="userProfile.height">Height: {{userProfile.height}}</p>-->
+
+
+  <div *ngIf="!isEditing" class="profile-info">
+    <p>Username: {{ userProfile.username }}</p>
+    <p>Email: {{ userProfile.email }}</p>
+    <p *ngIf="userProfile.gender">Gender: {{ userProfile.gender }}</p>
+    <p *ngIf="userProfile.age">Age: {{ userProfile.age }}</p>
+    <p *ngIf="userProfile.preferredUnitSystem">Units: {{ userProfile.preferredUnitSystem }}</p>
+    <p *ngIf="userProfile.weight">Weight: {{ userProfile.weight }}</p>
+    <p *ngIf="userProfile.height">Height: {{ userProfile.height }}</p>
+
+    <button (click)="isEditing = true">Edit Profile</button>
+  </div>
+
+  <form *ngIf="isEditing" (ngSubmit)="updateUser()" #editForm="ngForm">
+    <h5>Username</h5>
+    <input type="text" [(ngModel)]="updatedProfile.username" name="username" placeholder="Username">
+    <h5>Email</h5>
+    <input type="email" [(ngModel)]="updatedProfile.email" name="email" placeholder="Email">
+    <h5>Gender</h5>
+<!--    <input type="text" [(ngModel)]="updatedProfile.gender" name="gender" placeholder="Gender (e.g. MALE)">-->
+    <select [(ngModel)]="updatedProfile.gender" name="gender">
+      <option value="" disabled selected hidden>Select gender</option>
+      <option *ngFor="let option of genderOptions" [value]="option.value">
+        {{ option.label }}
+      </option>
+    </select>
+    <h5>Age</h5>
+    <input type="number" [(ngModel)]="updatedProfile.age" name="age" placeholder="Age">
+<!--    <input type="text" [(ngModel)]="updatedProfile.preferredUnitSystem" name="units" placeholder="Units (e.g. KG_CM)">-->
+    <h5>Preferred Units</h5>
+    <select [(ngModel)]="updatedProfile.preferredUnitSystem" name="units">
+      <option value="" disabled selected hidden>Select unit system</option>
+      <option *ngFor="let option of unitOptions" [value]="option.value">
+        {{ option.label }}
+      </option>
+    </select>
+    <h5>Your Weight</h5>
+    <input type="number" [(ngModel)]="updatedProfile.weight" name="weight" placeholder="Weight">
+    <h5>Your Height</h5>
+    <input type="number" [(ngModel)]="updatedProfile.height" name="height" placeholder="Height">
+
+    <button type="submit">Save Changes</button>
+    <button type="button" (click)="isEditing = false">Cancel</button>
+  </form>
 
 
   <h3>Add New Log</h3>

@@ -22,6 +22,18 @@ interface ProgressLog {
 })
 export class ProfileComponent implements  OnInit{
 
+  isEditing = false;
+
+  updatedProfile = {
+    username: '',
+    email: '',
+    gender: '',
+    age: 0,
+    preferredUnitSystem: '',
+    height: 0,
+    weight: 0
+  };
+
   userProfile= {
     username: '',
     email: '',
@@ -50,13 +62,28 @@ export class ProfileComponent implements  OnInit{
     { label: 'Dips', value: 'DIPS' }
   ];
 
+  genderOptions = [
+    { label: 'Male', value: 'MALE' },
+    { label: 'Female', value: 'FEMALE' },
+    { label: 'Non-binary', value: 'NON_BINARY' },
+    { label: 'Prefer not to say', value: 'PREFER_NOT_TO_SAY' }
+  ];
+
+  unitOptions = [
+    { label: 'Metric (kg, cm)', value: 'METRIC' },
+    { label: 'Imperial (lbs, in)', value: 'IMPERIAL' }
+  ];
+
   progressLogs: ProgressLog[] = [];
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.http.get<any>('/api/users/me').subscribe({
-      next: (res: any) => this.userProfile = res,
+      next: (res: any) => {
+        this.userProfile = res;
+        this.updatedProfile = {...res}; // clones data
+      },
       error: err => alert('Error registering user')
     })
     this.fetchLogs();
@@ -98,6 +125,17 @@ export class ProfileComponent implements  OnInit{
       error: err => alert('Error fetching logs'),
 
     })
+  }
+
+  updateUser() {
+    this.http.put(`/api/users/edit`, this.updatedProfile).subscribe({
+      next: () => {
+        alert('Profile updated successfully');
+        this.userProfile = { ...this.updatedProfile };
+        this.isEditing = false;
+      },
+      error: err => alert(err.error?.message || 'Update failed')
+    });
   }
 
 }
