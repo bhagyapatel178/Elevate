@@ -43,10 +43,16 @@ public class UserController {
         return ResponseEntity.ok(Map.of("token", token));
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<String> editUser(@PathVariable("id") Long id, @RequestBody UpdateUserRequest updateUserRequest){
-        userService.editUser(id, updateUserRequest);
-        return ResponseEntity.ok("Account details updated");
+    @PutMapping("edit")
+    public ResponseEntity<Map<String, String>> editUser(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UpdateUserRequest updateUserRequest){
+        String username = userDetails.getUsername();
+        boolean accountExists = userService.existsByUsername(username);
+        if(accountExists){
+            userService.editUser(username, updateUserRequest);
+            return ResponseEntity.ok(Map.of("message","Account details updated"));
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("{id}")

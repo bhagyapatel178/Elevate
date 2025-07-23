@@ -1,0 +1,40 @@
+form {
+  max-width: 400px;
+  margin: 2rem auto;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  input, select {
+    margin-bottom: 1rem;
+  }
+
+  button{
+    margin-right: 1rem;
+  }
+
+  .password-row {
+    position: relative;
+    width: 100%;
+    margin-bottom: 0;
+
+    button {
+      background: transparent;
+      border: none;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-100%);
+      font-size: 15px;
+      padding: 0;
+    }
+  }
+
+  .enter {
+    padding: 0;
+    right:10rem;
+  }
+
+}
+

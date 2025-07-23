@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {CommonModule, NgIf} from '@angular/common';
-import {log} from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
 
 
 interface ProgressLog {
@@ -23,6 +22,18 @@ interface ProgressLog {
 })
 export class ProfileComponent implements  OnInit{
 
+  isEditing = false;
+
+  updatedProfile = {
+    username: '',
+    email: '',
+    gender: '',
+    age: 0,
+    preferredUnitSystem: '',
+    height: 0,
+    weight: 0
+  };
+
   userProfile= {
     username: '',
     email: '',
@@ -33,12 +44,14 @@ export class ProfileComponent implements  OnInit{
     weight: 0
   };
 
-  newLog = {
+  newLift = {
     liftType: '',
-    variation: '',
-    weight:null,
-    reps: null
+    variation: ''
   };
+
+  sets: { weight: number | null, reps: number | null }[] = [
+    { weight: null, reps: null }
+  ];
 
   liftOptions = [
     { label: 'Bench Press', value: 'BENCH_PRESS' },
@@ -49,13 +62,28 @@ export class ProfileComponent implements  OnInit{
     { label: 'Dips', value: 'DIPS' }
   ];
 
+  genderOptions = [
+    { label: 'Male', value: 'MALE' },
+    { label: 'Female', value: 'FEMALE' },
+    { label: 'Non-binary', value: 'NON_BINARY' },
+    { label: 'Prefer not to say', value: 'PREFER_NOT_TO_SAY' }
+  ];
+
+  unitOptions = [
+    { label: 'Metric (kg, cm)', value: 'METRIC' },
+    { label: 'Imperial (lbs, in)', value: 'IMPERIAL' }
+  ];
+
   progressLogs: ProgressLog[] = [];
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.http.get<any>('/api/users/me').subscribe({
-      next: (res: any) => this.userProfile = res,
+      next: (res: any) => {
+        this.userProfile = res;
+        this.updatedProfile = {...res}; // clones data
+      },
       error: err => alert('Error registering user')
     })
     this.fetchLogs();
@@ -70,23 +98,26 @@ export class ProfileComponent implements  OnInit{
     if (liftType == 'DIPS'){return 'Dips'}
     return ''
   }
-  createLog(){
-    this.http.post('api/progress-logs', this.newLog).subscribe({
-      next: () => {
-        this.fetchLogs();
-        this.newLog = {
-          liftType: '',
-          variation: '',
-          weight: null,
-          reps: null
-        };
-      },
-      error: err => {
-        alert(err.error?.message || 'Unexpected error creating log');
-      }
 
-    })
+  createLog(){
+    const logsToSend = this.sets.map(set => ({
+      liftType: this.newLift.liftType,
+      variation: this.newLift.variation,
+      weight: set.weight,
+      reps: set.reps
+    }));
+
+    logsToSend.forEach(log => {
+      this.http.post('api/progress-logs', log).subscribe({
+        next: () => this.fetchLogs(),
+        error: err => alert(err.error?.message)
+      });
+    });
+    this.newLift = { liftType: '', variation: '' };
+    this.sets = [{ weight: null, reps: null }];
   }
+
+
 
   fetchLogs(){
     this.http.get<any>('/api/users/me/logs').subscribe({
@@ -95,6 +126,30 @@ export class ProfileComponent implements  OnInit{
 
     })
   }
+
+  updateUser() {
+    this.http.put(`/api/users/edit`, this.updatedProfile).subscribe({
+      next: () => {
+        this.userProfile = { ...this.updatedProfile };
+        this.isEditing = false;
+      },
+      error: err => {
+        console.error(err);
+        alert(err.error?.message || 'Update failed')
+      }
+    });
+  }
+
+  getGenderLabel(value: string): string {
+    const match = this.genderOptions.find(option => option.value === value);
+    return match ? match.label : value;
+  }
+
+  getUnitLabel(value: string): string {
+    const match = this.unitOptions.find(option => option.value === value);
+    return match ? match.label : value;
+  }
+
 
 }
 

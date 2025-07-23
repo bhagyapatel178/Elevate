@@ -71,9 +71,9 @@ public class UserService {
         );
     }
 
-    public void editUser(Long id, UpdateUserRequest updateUserRequest) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+    public void editUser(String username, UpdateUserRequest updateUserRequest) {
+        User user = userRepository.findByUsername(username);
+
         if (updateUserRequest.username() != null) user.setUsername(updateUserRequest.username());
         if (updateUserRequest.email() != null) user.setEmail(updateUserRequest.email());
         if (updateUserRequest.gender() != null) user.setGender(User.GenderType.valueOf(updateUserRequest.gender()));
