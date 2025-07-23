@@ -32,12 +32,14 @@ export class ProfileComponent implements  OnInit{
     weight: 0
   };
 
-  newLog = {
+  newLift = {
     liftType: '',
-    variation: '',
-    weight:null,
-    reps: null
+    variation: ''
   };
+
+  sets: { weight: number | null, reps: number | null }[] = [
+    { weight: null, reps: null }
+  ];
 
   liftOptions = [
     { label: 'Bench Press', value: 'BENCH_PRESS' },
@@ -70,31 +72,25 @@ export class ProfileComponent implements  OnInit{
     return ''
   }
 
-  isNull(biometric: string){
-    return biometric !== '';
-  }
-
-  // notTouched(biometric: number){
-  //   return ) === 0;
-  // }
-
   createLog(){
-    this.http.post('api/progress-logs', this.newLog).subscribe({
-      next: () => {
-        this.fetchLogs();
-        this.newLog = {
-          liftType: '',
-          variation: '',
-          weight: null,
-          reps: null
-        };
-      },
-      error: err => {
-        alert(err.error?.message || 'Unexpected error creating log');
-      }
+    const logsToSend = this.sets.map(set => ({
+      liftType: this.newLift.liftType,
+      variation: this.newLift.variation,
+      weight: set.weight,
+      reps: set.reps
+    }));
 
-    })
+    logsToSend.forEach(log => {
+      this.http.post('api/progress-logs', log).subscribe({
+        next: () => this.fetchLogs(),
+        error: err => alert(err.error?.message)
+      });
+    });
+    this.newLift = { liftType: '', variation: '' };
+    this.sets = [{ weight: null, reps: null }];
   }
+
+
 
   fetchLogs(){
     this.http.get<any>('/api/users/me/logs').subscribe({

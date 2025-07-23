@@ -10,22 +10,56 @@
 
 
   <h3>Add New Log</h3>
-  <form (ngSubmit)="createLog()" #registerForm="ngForm">
-    <select name="liftType" [(ngModel)]="newLog.liftType" required>
-      <option value="" disabled selected hidden>Select Lift</option>
-      <option [value]="'BENCH_PRESS'">Bench Press</option>
-      <option [value]="'SQUAT'">Squat</option>
-      <option [value]="'DEADLIFT'">Deadlift</option>
-      <option [value]="'DUMBBELL_PRESS'">Dumbbell Press</option>
-      <option [value]="'PULL_UPS'">Pull Ups</option>
-      <option [value]="'DIPS'">Dips</option>
-    </select>
 
-    <input type="text" placeholder="Variation" [(ngModel)]="newLog.variation" name="variation" required>
-    <input type="number" placeholder="Weight (kg)" [(ngModel)]="newLog.weight" name="weight" required>
-    <input type="number" placeholder="Reps" [(ngModel)]="newLog.reps" name="reps" required>
-    <button type="submit">Add Log</button>
+  <form (ngSubmit)="createLog()" #registerForm="ngForm">
+    <!-- Set Lift Type + Variation Once -->
+    <select name="liftType" [(ngModel)]="newLift.liftType" required>
+      <option value="" disabled selected hidden>Select Lift</option>
+      <option *ngFor="let lift of liftOptions" [value]="lift.value">
+        {{ lift.label }}
+      </option>
+    </select>
+    <input type="text" placeholder="Variation" [(ngModel)]="newLift.variation" name="variation" required>
+
+
+    <!-- Multiple Set Entries -->
+    <div *ngFor="let set of sets; let i = index" class="set-row">
+
+      <input type="number" placeholder="Weight (kg)" [(ngModel)]="sets[i].weight" [name]="'weight' + i" required>
+      <input type="number" placeholder="Reps" [(ngModel)]="sets[i].reps" [name]="'reps' + i" required>
+
+      <!-- Optional: remove button -->
+      <button type="button" (click)="sets.splice(i, 1)" *ngIf="sets.length > 1">X</button>
+    </div>
+
+    <button type="button" (click)="sets.push({weight: null, reps: null})">+ Add Set</button>
+    <br><br>
+    <button type="submit">Submit Log</button>
   </form>
+
+
+
+
+
+
+
+<!--  <h3>Add New Log</h3>-->
+<!--  <form (ngSubmit)="createLog()" #registerForm="ngForm">-->
+<!--    <select name="liftType" [(ngModel)]="newLog.liftType" required>-->
+<!--      <option value="" disabled selected hidden>Select Lift</option>-->
+<!--      <option [value]="'BENCH_PRESS'">Bench Press</option>-->
+<!--      <option [value]="'SQUAT'">Squat</option>-->
+<!--      <option [value]="'DEADLIFT'">Deadlift</option>-->
+<!--      <option [value]="'DUMBBELL_PRESS'">Dumbbell Press</option>-->
+<!--      <option [value]="'PULL_UPS'">Pull Ups</option>-->
+<!--      <option [value]="'DIPS'">Dips</option>-->
+<!--    </select>-->
+
+<!--    <input type="text" placeholder="Variation" [(ngModel)]="newLog.variation" name="variation" required>-->
+<!--    <input type="number" placeholder="Weight (kg)" [(ngModel)]="newLog.weight" name="weight" required>-->
+<!--    <input type="number" placeholder="Reps" [(ngModel)]="newLog.reps" name="reps" required>-->
+<!--    <button type="submit">Add Log</button>-->
+<!--  </form>-->
 
   <h3>Progress Logs</h3>
   <ul>
