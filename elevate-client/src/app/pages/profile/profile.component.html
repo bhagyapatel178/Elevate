@@ -74,6 +74,12 @@
     <button type="submit">Submit Log</button>
   </form>
 
+  <mwl-calendar-month-view
+    [viewDate]="viewDate"
+    [events]="events">
+
+  </mwl-calendar-month-view>
+
   <h3>Progress Logs</h3>
   <ul>
     <li *ngFor="let log of progressLogs">
@@ -82,3 +88,5 @@
   </ul>
 
 </div>
+
+

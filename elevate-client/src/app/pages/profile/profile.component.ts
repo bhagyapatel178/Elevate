@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
-import {CommonModule, NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 
+import { CalendarModule, CalendarEvent, CalendarView} from 'angular-calendar';
 
 interface ProgressLog {
   id: number;
@@ -16,11 +17,16 @@ interface ProgressLog {
 
 @Component({
   selector: 'app-profile',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,CalendarModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent implements  OnInit{
+
+
+  view: CalendarView = CalendarView.Month;
+  viewDate: Date = new Date();
+  events: CalendarEvent[] = [];
 
   isEditing = false;
 
