@@ -1,4 +1,6 @@
 <div *ngIf="userProfile.username;">
+
+
   <h2>Profile</h2>
 
   <div *ngIf="!isEditing" class="profile-info">
@@ -45,77 +47,4 @@
     <button type="button" (click)="isEditing = false">Cancel</button>
   </form>
 
-
-  <h3>Add New Log</h3>
-
-  <form (ngSubmit)="createLog()" #registerForm="ngForm">
-    <!-- Set Lift Type + Variation Once -->
-    <select name="liftType" [(ngModel)]="newLift.liftType" required>
-      <option value="" disabled selected hidden>Select Lift</option>
-      <option *ngFor="let lift of liftOptions" [value]="lift.value">
-        {{ lift.label }}
-      </option>
-    </select>
-    <input type="text" placeholder="Variation" [(ngModel)]="newLift.variation" name="variation" required>
-
-
-    <!-- Multiple Set Entries -->
-    <div *ngFor="let set of sets; let i = index" class="set-row">
-
-      <input type="number" placeholder="Weight (kg)" [(ngModel)]="sets[i].weight" [name]="'weight' + i" required>
-      <input type="number" placeholder="Reps" [(ngModel)]="sets[i].reps" [name]="'reps' + i" required>
-
-      <!-- Optional: remove button -->
-      <button type="button" (click)="sets.splice(i, 1)" *ngIf="sets.length > 1">X</button>
-    </div>
-
-    <button type="button" (click)="sets.push({weight: null, reps: null})">+ Add Set</button>
-    <br><br>
-    <button type="submit">Submit Log</button>
-  </form>
-
-
-  <div class="cal-header">
-    <h2 class="cal-title">
-      {{ viewDate | calendarDate:(view + 'ViewTitle') }}
-    </h2>
-
-    <button
-      mwlCalendarPreviousView
-    [(viewDate)]="viewDate"
-    [view]="view">
-    ‹
-    </button>
-
-    <button
-      mwlCalendarToday
-      [(viewDate)]="viewDate">
-      Today
-    </button>
-
-    <button
-      mwlCalendarNextView
-    [(viewDate)]="viewDate"
-    [view]="view">
-    ›
-    </button>
-
-  </div>
-
-  <mwl-calendar-month-view
-    [viewDate]="viewDate"
-    [events]="events"
-    [weekStartsOn]="1">
-
-  </mwl-calendar-month-view>
-
-  <h3>Progress Logs</h3>
-  <ul>
-    <li *ngFor="let log of progressLogs">
-      {{ getLiftOutput(log.liftType) }}  {{ log.variation }} - {{ log.weight }}kg {{ log.reps }} reps on {{ log.date }}
-    </li>
-  </ul>
-
 </div>
-
-
