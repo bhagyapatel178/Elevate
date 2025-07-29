@@ -1,0 +1,43 @@
+div {
+  //max-width: 600px;
+  //margin: 2rem auto;
+  //background-color: white;
+  padding: 2rem 3rem;
+  border-radius: 8px;
+  //box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  h3{
+    padding-top: 2rem;
+    margin: 0;
+  }
+
+  form{
+    margin-top: 1rem;
+
+    select,
+    input {
+      margin-bottom: 1rem;
+    }
+    button{
+      padding: 0.5rem 0;
+      margin: 0;
+    }
+  }
+
+  .set-row {
+    display: flex;
+    //gap: 1rem;
+    //margin-bottom: 1rem;
+    padding: 0;
+    border: 0;
+
+    input {
+      flex: 1;
+    }
+  }
+
+
+
+
+
+}
