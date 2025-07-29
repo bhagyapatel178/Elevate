@@ -132,7 +132,8 @@ select {
 /* weekday header row */
 .cal-month-view .cal-header .cal-cell {
   font-size: 0.85rem;
-  color: #666;
+  //color: #666;
+  color: black;
   font-weight: bold;
 }
 
@@ -144,7 +145,8 @@ select {
 
 .cal-day-number{
   font-size: 0.8rem !important;
-  font-weight: bold !important;
+  font-weight: bolder !important;
+  color: black;
 }
 
 //.cal-open-day-events {
@@ -164,6 +166,6 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 15px 15px ;
+  margin: 10px 10px ;
 
 }

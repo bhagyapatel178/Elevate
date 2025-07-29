@@ -38,6 +38,10 @@
 //  }
 //
 //}
+h2{
+  text-align: center;
+  margin-top: 2rem;
+}
 
 /* ===== Layout ===== */
 /* ===== Layout (centre + padding) ===== */
@@ -107,28 +111,55 @@
   font-style: italic;
 }
 
-/* ===== Question-mark badge ===== */
-.opt-icon {
-  display: inline-flex;
-  cursor: help;
-}
+/* === icon next to button === */
+//.info-icon {
+//  display: inline-flex;
+//  align-items: center;
+//  cursor: pointer;
+//  margin-right: .75rem;      /* gap before Edit button */
+//  user-select: none;
+//}
+//
+///* === pop-up bubble === */
+//.info-pop {
+//  position: absolute;
+//  right: 0;                  /* aligns with button’s right edge */
+//  top: calc(100% + .5rem);   /* just below the row */
+//  max-width: 270px;
+//  font-size: .78rem;
+//  line-height: 1.25;
+//  background: #fff;
+//  color: #333;
+//  border: 1px solid #d0d0ff;
+//  border-left: 4px solid #3f7df6;
+//  border-radius: 6px;
+//  padding: .6rem .8rem;
+//  box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+//  z-index: 1000;
+//}
+//
+///* let the btn-row become relative so pop-up can position absolute */
+//.btn-row-right { position: relative; }
 
-/* ===== Edit button row ===== */
-.btn-row-right {
-  display: flex;
-  justify-content: flex-end;
-}
-.edit-btn {
-  padding: .55rem 1.3rem;
-  border-radius: 8px;
-  border: none;
-  background: #3f7df6;
-  color: #fff;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background .15s;
-}
-.edit-btn:hover { background: #356ae0; }
+///* ===== Edit button row ===== */
+//.btn-row-right {
+//  display: flex;
+//  justify-content: flex-end;
+//}
+//.edit-btn {
+//  padding: .55rem 1.3rem;
+//  border-radius: 8px;
+//  border: none;
+//  background: #3f7df6;
+//  color: #fff;
+//  font-weight: 500;
+//  cursor: pointer;
+//  transition: background .15s;
+//}
+
+//.edit-btn:hover { background: #356ae0; }
+
+
 
 /* ===== Responsive tweak: stack to one column under 600px ===== */
 @media (max-width: 600px) {

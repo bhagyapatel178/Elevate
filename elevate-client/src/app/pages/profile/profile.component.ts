@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
@@ -82,5 +82,23 @@ export class ProfileComponent implements  OnInit{
     const match = this.unitOptions.find(option => option.value === value);
     return match ? match.label : value;
   }
+
+//   get biometricsIncomplete(): boolean {
+//     const { gender, weight, height } = this.userProfile;
+//     return !(gender && weight && height);
+//   }
+//
+//   showInfo = false;   // toggled by the icon
+//
+// // clickOutside directive: quick inline helper
+//   @HostListener('document:click', ['$event'])
+//   closeOnOutside(event: Event) {
+//     const path = event.composedPath?.() || [];
+//     const clickedInsidePopover = (path as HTMLElement[]).some(el =>
+//       (el as HTMLElement).classList?.contains?.('info-pop') ||
+//       (el as HTMLElement).classList?.contains?.('info-icon')
+//     );
+//     if (!clickedInsidePopover) this.showInfo = false;
+//   }
 
 }

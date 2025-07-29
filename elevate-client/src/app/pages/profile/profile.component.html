@@ -1,9 +1,24 @@
 <div *ngIf="userProfile.username">
+    <h2>Profile</h2>
+  <!-- info icon -->
+<!--  <span class="info-icon"-->
+<!--        (click)="showInfo = !showInfo"-->
+<!--        title="More info">-->
+<!--      &lt;!&ndash; simple SVG ‘i’ in a circle &ndash;&gt;-->
+<!--      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">-->
+<!--        <circle cx="12" cy="12" r="10" stroke="#3f7df6" stroke-width="2"/>-->
+<!--        <line x1="12" y1="8" x2="12" y2="12.5" stroke="#3f7df6" stroke-width="2" stroke-linecap="round"/>-->
+<!--        <circle cx="12" cy="16" r="1.3" fill="#3f7df6"/>-->
+<!--      </svg>-->
+<!--      </span>-->
 
   <!-- ========= VIEW MODE (cards) ========= -->
   <section *ngIf="!isEditing" class="profile-cards">
-
+<!--    <div *ngIf="biometricsIncomplete" class="info-note">-->
+<!--      <h4>Add your biometrics for a more accurate strength-match…</h4>-->
+<!--    </div>-->
     <!-- card grid -->
+
     <div class="card-grid">
 
       <!-- USERNAME (always present) -->
@@ -16,6 +31,16 @@
       <div class="card">
         <div class="label">Email</div>
         <div class="value">{{ userProfile.email }}</div>
+      </div>
+
+      <!-- UNITS (optional badge) -->
+      <div class="card" [ngClass]="{ missing: !userProfile.preferredUnitSystem }">
+        <div class="label">
+          Preferred Units
+        </div>
+        <div class="value">
+          {{ userProfile.preferredUnitSystem ? getUnitLabel(userProfile.preferredUnitSystem) : '??' }}
+        </div>
       </div>
 
       <!-- GENDER -->
@@ -32,35 +57,10 @@
         <div class="value">{{ userProfile.age || '??' }}</div>
       </div>
 
-      <!-- UNITS (optional badge) -->
-      <div class="card" [ngClass]="{ missing: !userProfile.preferredUnitSystem }">
-        <div class="label">
-          Units
-          <span class="opt-icon" title="Optional — improves strength match">
-        <!-- 14×14 question-mark SVG -->
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10" stroke="#888" stroke-width="1.5"/>
-          <path d="M9.5 9a2.5 2.5 0 1 1 4 2l-.9.9c-.6.5-.9 1.2-.9 2v.2M12 17h.01"
-                stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </span>
-        </div>
-        <div class="value">
-          {{ userProfile.preferredUnitSystem ? getUnitLabel(userProfile.preferredUnitSystem) : '??' }}
-        </div>
-      </div>
-
       <!-- WEIGHT -->
       <div class="card" [ngClass]="{ missing: !userProfile.weight }">
         <div class="label">
           Weight
-          <span class="opt-icon" title="Optional — improves strength match">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10" stroke="#888" stroke-width="1.5"/>
-          <path d="M9.5 9a2.5 2.5 0 1 1 4 2l-.9.9c-.6.5-.9 1.2-.9 2v.2M12 17h.01"
-                stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </span>
         </div>
         <div class="value">{{ userProfile.weight || '??' }}</div>
       </div>
@@ -69,79 +69,100 @@
       <div class="card" [ngClass]="{ missing: !userProfile.height }">
         <div class="label">
           Height
-          <span class="opt-icon" title="Optional — improves strength match">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10" stroke="#888" stroke-width="1.5"/>
-          <path d="M9.5 9a2.5 2.5 0 1 1 4 2l-.9.9c-.6.5-.9 1.2-.9 2v.2M12 17h.01"
-                stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </span>
         </div>
         <div class="value">{{ userProfile.height || '??' }}</div>
       </div>
 
-    </div> <!-- end card-grid -->
+    </div>
+    <!-- end card-grid -->
 
+<!--    <div class="info-note">-->
+<!--      Add your biometrics for a more accurate strength-match...-->
+<!--    </div>-->
 
     <!-- edit button row -->
     <div class="btn-row-right">
+      <!-- Edit button stays the same -->
       <button class="edit-btn" (click)="isEditing = true">Edit Profile</button>
+
+      <!-- pop-up: *only* when biometrics are incomplete and showInfo is true -->
+<!--      <div *ngIf="biometricsIncomplete && showInfo"-->
+<!--           class="info-pop"-->
+<!--           (clickOutside)="showInfo = false">        &lt;!&ndash; auto-close on outside &ndash;&gt;-->
+<!--        Optional — add biometrics for a more accurate strength-match.-->
+<!--      </div>-->
     </div>
+
   </section>
 
   <!-- ========= EDIT MODE ========= -->
   <form *ngIf="isEditing"
-        class="profile-form"
+        class="profile-cards"
         (ngSubmit)="updateUser()"
         #editForm="ngForm">
 
     <!-- simple input grid -->
-    <div class="form-two-col">
+    <div class="card-grid">
 
-      <label>
-        <span>Username</span>
-        <input type="text" [(ngModel)]="updatedProfile.username" name="username">
-      </label>
+      <div class="card">
+        <label>
+          <span class="label">Username</span>
+          <input class="value" type="text" [(ngModel)]="updatedProfile.username" name="username">
+        </label>
+      </div>
 
+      <div class="card">
       <label>
-        <span>Email</span>
-        <input type="email" [(ngModel)]="updatedProfile.email" name="email">
+        <span class="label">Email</span>
+        <input class="value" type="email" [(ngModel)]="updatedProfile.email" name="email">
       </label>
+      </div>
 
-      <label>
-        <span>Gender</span>
-        <select [(ngModel)]="updatedProfile.gender" name="gender">
-          <option value="" disabled selected hidden>Select gender</option>
-          <option *ngFor="let g of genderOptions" [value]="g.value">
-            {{ g.label }}
-          </option>
-        </select>
-      </label>
+      <div class="card">
+        <label>
+          <span class="label">Preferred Units</span>
+          <select class="value" [(ngModel)]="updatedProfile.preferredUnitSystem" name="units">
+            <option class="value" value="" disabled selected hidden>Select unit system</option>
+            <option class="value" *ngFor="let u of unitOptions" [value]="u.value">
+              {{ u.label }}
+            </option>
+          </select>
+        </label>
+      </div>
 
-      <label>
-        <span>Age</span>
-        <input type="number" [(ngModel)]="updatedProfile.age" name="age">
-      </label>
 
-      <label>
-        <span>Preferred Units</span>
-        <select [(ngModel)]="updatedProfile.preferredUnitSystem" name="units">
-          <option value="" disabled selected hidden>Select unit system</option>
-          <option *ngFor="let u of unitOptions" [value]="u.value">
-            {{ u.label }}
-          </option>
-        </select>
-      </label>
+      <div class="card">
+        <label>
+          <span class="label">Gender</span>
+          <select class="value"[(ngModel)]="updatedProfile.gender" name="gender">
+            <option class="value" value="" disabled selected hidden>Select gender</option>
+            <option class="value" *ngFor="let g of genderOptions" [value]="g.value">
+              {{ g.label }}
+            </option>
+          </select>
+        </label>
+      </div>
 
-      <label>
-        <span>Weight</span>
-        <input type="number" [(ngModel)]="updatedProfile.weight" name="weight">
-      </label>
+      <div class="card">
+        <label>
+          <span class="label">Age</span>
+          <input class="value" type="number" [(ngModel)]="updatedProfile.age" name="age">
+        </label>
+      </div>
 
-      <label>
-        <span>Height</span>
-        <input type="number" [(ngModel)]="updatedProfile.height" name="height">
-      </label>
+      <div class="card">
+        <label>
+          <span class="label">Weight</span>
+          <input class="value" type="number" [(ngModel)]="updatedProfile.weight" name="weight">
+        </label>
+      </div>
+
+      <div class="card">
+        <label>
+          <span class="label">Height</span>
+          <input class="value" type="number" [(ngModel)]="updatedProfile.height" name="height">
+        </label>
+      </div>
     </div>
 
     <div class="btn-row">
@@ -151,61 +172,3 @@
   </form>
 
 </div>
-
-
-<!--<div *ngIf="userProfile.username;">-->
-
-
-<!--  <h2>Profile</h2>-->
-
-<!--  <div *ngIf="!isEditing" class="profile-info">-->
-<!--    <p>Username: {{ userProfile.username }}</p>-->
-<!--    <p>Email: {{ userProfile.email }}</p>-->
-<!--    <p *ngIf="userProfile.gender">Gender: {{ getGenderLabel(userProfile.gender) }}</p>-->
-<!--    <p *ngIf="userProfile.age">Age: {{ userProfile.age }}</p>-->
-<!--    <p *ngIf="userProfile.preferredUnitSystem">Units: {{ getUnitLabel(userProfile.preferredUnitSystem) }}</p>-->
-<!--    <p *ngIf="userProfile.weight">Weight: {{ userProfile.weight }}</p>-->
-<!--    <p *ngIf="userProfile.height">Height: {{ userProfile.height }}</p>-->
-
-<!--    <button (click)="isEditing = true">Edit Profile</button>-->
-<!--  </div>-->
-
-
-<!--  <form *ngIf="isEditing" (ngSubmit)="updateUser()" #editForm="ngForm">-->
-<!--    <h5>Username</h5>-->
-<!--    <input type="text" [(ngModel)]="updatedProfile.username" name="username" placeholder="Username">-->
-
-<!--    <h5>Email</h5>-->
-<!--    <input type="email" [(ngModel)]="updatedProfile.email" name="email" placeholder="Email">-->
-
-<!--    <h5>Gender</h5>-->
-<!--    <select [(ngModel)]="updatedProfile.gender" name="gender">-->
-<!--      <option value="" disabled selected hidden>Select gender</option>-->
-<!--      <option *ngFor="let option of genderOptions" [value]="option.value">-->
-<!--        {{ option.label }}-->
-<!--      </option>-->
-<!--    </select>-->
-
-<!--    <h5>Age</h5>-->
-<!--    <input type="number" [(ngModel)]="updatedProfile.age" name="age" placeholder="Age">-->
-
-<!--    <h5>Preferred Units</h5>-->
-<!--    <select [(ngModel)]="updatedProfile.preferredUnitSystem" name="units">-->
-<!--      <option value="" disabled selected hidden>Select unit system</option>-->
-<!--      <option *ngFor="let option of unitOptions" [value]="option.value">-->
-<!--        {{ option.label }}-->
-<!--      </option>-->
-<!--    </select>-->
-
-<!--    <h5>Your Weight</h5>-->
-<!--    <input type="number" [(ngModel)]="updatedProfile.weight" name="weight" placeholder="Weight">-->
-
-<!--    <h5>Your Height</h5>-->
-<!--    <input type="number" [(ngModel)]="updatedProfile.height" name="height" placeholder="Height">-->
-
-
-<!--    <button type="submit">Save Changes</button>-->
-<!--    <button type="button" (click)="isEditing = false">Cancel</button>-->
-<!--  </form>-->
-
-<!--</div>-->
