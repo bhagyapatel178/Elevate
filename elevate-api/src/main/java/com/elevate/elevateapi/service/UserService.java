@@ -6,6 +6,8 @@ import com.elevate.elevateapi.entity.User;
 import com.elevate.elevateapi.repository.ProgressLogRepository;
 import com.elevate.elevateapi.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -131,24 +133,9 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-
-
-//    public List<ProgressLog> getLogs(String username) {
-//        return progressLogRepository.findByUserUsername(username);
-//    }
-
-//    public List<ProgressLogResponse> getLogs(String username) {
-//        return progressLogRepository.findByUserUsername(username).stream()
-//                .map(log -> new ProgressLogResponse(
-//                        log.getId(),
-//                        log.getLiftType().toString(),
-//                        log.getVariation(),
-//                        log.getWeightKg(),
-//                        log.getReps(),
-//                        log.getDate(),
-//                        log.getUser().getId()
-//                ))
-//                .toList();
-//    }
+    public UserSearchResult searchByUsername (String username){
+        User user =  userRepository.findByUsername(username);
+        return new UserSearchResult(user.getId(), user.getUsername());
+    }
 
 }

@@ -1,8 +1,9 @@
 package com.elevate.elevateapi.controller;
 
 import com.elevate.elevateapi.dto.*;
-import com.elevate.elevateapi.entity.ProgressLog;
 import com.elevate.elevateapi.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -78,16 +79,16 @@ public class UserController {
         }
     }
 
-//    @GetMapping("me")
-//    public ResponseEntity<UserProfileResponse> getUserbyUsername(@RequestBody String username){
-//        boolean accountExists = userService.existsByUsername(username);
-//        if (accountExists){
-//            return ResponseEntity.ok(userService.getUserByUsername(username));
-//        }
-//        else{
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @GetMapping("search")
+    public ResponseEntity<UserSearchResult> getUserByUsername(@RequestParam String username){
+        boolean accountExists = userService.existsByUsername(username);
+        if (accountExists){
+            return ResponseEntity.ok(userService.searchByUsername(username));
+        }
+        else{
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @DeleteMapping("{id}")
     public  ResponseEntity<String> deleteUser(@PathVariable("id") Long id){
