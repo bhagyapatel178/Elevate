@@ -13,7 +13,6 @@ import java.time.Instant;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "friend_requests", uniqueConstraints = {@UniqueConstraint(columnNames = {"sender_id", "receiver_id"})})
 public class FriendRequest {
@@ -22,7 +21,7 @@ public class FriendRequest {
     @GeneratedValue
     private Long id;
 
-    private Status status;
+    private Status status = Status.PENDING;
 
     @ManyToOne(optional = false)
     private User sender;
@@ -36,6 +35,11 @@ public class FriendRequest {
     public enum Status {
         PENDING,
         ACCEPTED
+    }
+
+    public FriendRequest(User sender, User receiver){
+        this.setSender(sender);
+        this.setReceiver(receiver);
     }
 
 }

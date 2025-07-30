@@ -2,6 +2,7 @@ import {Component,ChangeDetectionStrategy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import {Subscription} from 'rxjs';
 
 interface UserSearchResult {
   id: number;
@@ -39,5 +40,13 @@ export class FriendsComponent{
         }
       });
   }
+
+  sendRequest(receiverId: number): Subscription {
+    return this.http.post<void>('/api/friend-request/send', receiverId).subscribe({
+      next: ()  => console.log('Request sent'),
+      error: () => console.error('Error sending request')
+    });
+  }
+
 
 }

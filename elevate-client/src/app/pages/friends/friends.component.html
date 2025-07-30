@@ -11,6 +11,6 @@
 <div *ngIf="result">
   <strong> Username: {{result.username}}</strong>
   <!-- Later: Add Friend / Requested / ✓ Friend -->
-  <button>Add</button>
+  <button (click)="sendRequest(result.id)">Add Friend</button>
 </div>
 <p *ngIf="error">{{ error }}</p>

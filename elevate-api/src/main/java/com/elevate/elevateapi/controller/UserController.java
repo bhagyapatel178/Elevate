@@ -2,8 +2,6 @@ package com.elevate.elevateapi.controller;
 
 import com.elevate.elevateapi.dto.*;
 import com.elevate.elevateapi.service.UserService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
