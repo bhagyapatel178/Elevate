@@ -5,8 +5,10 @@
   </a>
   <a routerLink="/">Home</a>
   <a routerLink="/profile">Profile</a>
+  <a routerLink="/friends">Friends</a>
   <a routerLink="/register" *ngIf="!auth.isLoggedin()">Register</a>
   <a routerLink="/login" *ngIf="!auth.isLoggedin()">Login</a>
+
 
   <button *ngIf="auth.isLoggedin()" (click)="logout()">Logout</button>
 </nav>
