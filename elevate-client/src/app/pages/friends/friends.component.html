@@ -1,1 +1,16 @@
-<p>friends works!</p>
+<!--<p>friends works!</p>-->
+<h2>Friends Page</h2>
+
+<div class="search-bar">
+  <form (ngSubmit)="findUser()">
+    <input type="search" class="form-control" [(ngModel)]="friendToSearch" name="friend" placeholder="Search by username..." />
+    <button>Search</button>
+  </form>
+</div>
+
+<div *ngIf="result">
+  <strong> Username: {{result.username}}</strong>
+  <!-- Later: Add Friend / Requested / ✓ Friend -->
+  <button>Add</button>
+</div>
+<p *ngIf="error">{{ error }}</p>
