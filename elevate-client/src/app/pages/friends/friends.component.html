@@ -1,27 +1,7 @@
-<!--&lt;!&ndash;<p>friends works!</p>&ndash;&gt;-->
-<!--<h2>Friends Page</h2>-->
-
-<!--<div class="search-bar">-->
-<!--  <form (ngSubmit)="findUser()">-->
-<!--    <input type="search" class="form-control" [(ngModel)]="friendToSearch" name="friend" placeholder="Search by username..." />-->
-<!--    <button>Search</button>-->
-<!--  </form>-->
-<!--</div>-->
-
-<!--<div *ngIf="result">-->
-<!--  <strong> Username: {{result.username}}</strong>-->
-<!--  &lt;!&ndash; Later: Add Friend / Requested / ✓ Friend &ndash;&gt;-->
-<!--  <button (click)="sendRequest(result.id)">Add Friend</button>-->
-<!--</div>-->
-<!--<p *ngIf="error">{{ error }}</p>-->
-
-<h2>Friends</h2>
-
 <button class="add-friend-btn" (click)="toggleFinder()" aria-label="Find friends">
   <img src="/add-user.png" alt="" class="logo" />
   <span class="label">Find friends</span>
 </button>
-
 
 <!-- Back-drop (clicking it closes the popup) -->
 <div class="overlay" *ngIf="showFinder" (click)="toggleFinder()">
@@ -41,9 +21,8 @@
 
       <div *ngIf="searchResult" class="search-res">
         <span>{{ searchResult.username }}</span>
-        <button (click)="sendRequest(searchResult.id)"
-                [disabled]="pendingAdd">
-          {{ pendingAdd ? 'Pending…' : 'Add Friend' }}
+        <button (click)="sendRequest(searchResult.id)" [disabled]="pendingAdd">
+          {{ pendingAdd ? 'Pending' : 'Add Friend' }}
         </button>
       </div>
 
@@ -52,30 +31,61 @@
   </div>
 </div>
 
-<!-- ────────────── Incoming requests ────────────── -->
-<h3>Incoming requests</h3>
-<ul *ngIf="incoming.length; else noReq">
-  <li *ngFor="let r of incoming" class="flex gap-2 items-center mb-1">
-    {{ r.senderUsername }}
-    <button (click)="actOnRequest(r,'accept')"
-            [disabled]="busyIds.has(r.requestId)">Accept</button>
-    <button (click)="actOnRequest(r,'decline')"
-            [disabled]="busyIds.has(r.requestId)">Decline</button>
-  </li>
-</ul>
-<ng-template #noReq>
-  <p class="italic text-gray-500">No pending requests</p>
-</ng-template>
+<!--tab-->
+<nav class="friend-tabs">
+  <button class="tab" [class.active]="tab==='friends'" (click)="tab='friends'">Friends</button>
+  <button class="tab" [class.active]="tab==='requests'" (click)="tab='requests'">Requests
+    <span *ngIf="incoming.length" class="badge">{{ incoming.length }}</span>
+  </button>
+</nav>
 
-<!-- ────────────── Friends list ────────────── -->
-<h3 class="mt-6">Your friends</h3>
-<ul *ngIf="friends.length; else noFriends">
-  <li *ngFor="let f of friends" class="flex gap-2 items-center mb-1">
-    {{ f.username }}
-    <button (click)="removeFriend(f.id)"
-            [disabled]="busyIds.has(f.id)">Remove</button>
-  </li>
-</ul>
-<ng-template #noFriends>
-  <p class="italic text-gray-500">You don’t have friends yet. Press the top right icon find your friends!</p>
-</ng-template>
+
+<section *ngIf="tab==='friends'">
+  <h2>Your Friends</h2>
+
+  <div class="friend-list" *ngIf="friends.length; else noFriends">
+    <article *ngFor="let f of friends" class="friend-card">
+
+      <button class="menu-btn"
+              (click)="toggleMenu(f.id, 'friend')">⋮</button>
+<!--      ⋯-->
+      <h4>{{ f.username }}</h4>
+
+      <!-- room in the middle for future info -->
+      <div class="placeholder"> <!-- empty for now --> </div>
+
+      <button class="compare-btn"
+              (click)="compareWith(f.id)">Compare →</button>
+
+      <!-- pop-over -->
+      <div class="popover"
+           *ngIf="openMenuId===f.id && openMenuType==='friend'">
+        <button (click)="removeFriend(f.id)">Remove friend</button>
+      </div>
+    </article>
+  </div>
+
+  <ng-template #noFriends>
+    <p class="empty">No friends at the moment.</p>
+  </ng-template>
+</section>
+
+<section *ngIf="tab==='requests'">
+  <h2>Incoming Requests</h2>
+
+  <ul class="request-list" *ngIf="incoming.length; else noReq">
+    <li *ngFor="let r of incoming" class="request-tube">
+      <span class="name">{{ r.senderUsername }}</span>
+
+      <button class="icon-btn" (click)="actOnRequest(r,'accept')"
+              [disabled]="busyIds.has(r.requestId)">Accept</button>
+
+      <button class="icon-btn" (click)="actOnRequest(r,'decline')"
+              [disabled]="busyIds.has(r.requestId)">✕</button>
+    </li>
+  </ul>
+
+  <ng-template #noReq>
+    <p class="empty">No incoming friend requests.</p>
+  </ng-template>
+</section>

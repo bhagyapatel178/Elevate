@@ -33,6 +33,10 @@ export class FriendsComponent implements OnInit{
   pendingAdd = false;
 
   showFinder = false;
+  tab: 'friends' | 'requests' = 'friends';
+
+  openMenuId: number | null = null;
+  openMenuType: 'friend' | 'req' | null = null;
 
   incoming: IncomingRequest[] = [];
   friends : FriendResponse[]  = [];
@@ -43,6 +47,17 @@ export class FriendsComponent implements OnInit{
   ngOnInit(): void {
     this.loadIncoming();
     this.loadFriends();
+  }
+
+  toggleMenu(id: number, type: 'friend' | 'req') {
+    // close if same card clicked again
+    this.openMenuId   = (this.openMenuId === id) ? null : id;
+    this.openMenuType = (this.openMenuType === type) ? null : type;
+  }
+
+  compareWith(friendId: number) {
+    // stub – route later
+    console.log('navigate to /compare/', friendId);
   }
 
 
@@ -124,7 +139,6 @@ export class FriendsComponent implements OnInit{
 
   // display info about users
   // when searching, show either friends, sent a request already, neither...
-  // -> a pop up on the side?
   // style friends page
   // directs them to a compare page
 
