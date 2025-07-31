@@ -10,7 +10,6 @@ import java.time.Instant;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "friends", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "friend_id"}))
 public class Friend {
@@ -29,4 +28,9 @@ public class Friend {
 
     @Column(nullable = false)
     private Instant since = Instant.now();
+
+    public Friend(User user, User friend){
+        setUser(user);
+        setFriend(friend);
+    }
 }

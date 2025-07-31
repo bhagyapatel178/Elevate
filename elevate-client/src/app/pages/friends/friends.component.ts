@@ -9,6 +9,12 @@ interface UserSearchResult {
   username: string;
 }
 
+interface IncomingRequest {
+  requestId: number;
+  senderId:  number;
+  senderUsername: string;
+}
+
 @Component({
   selector: 'app-friends',
   imports: [CommonModule,FormsModule],
@@ -47,6 +53,8 @@ export class FriendsComponent{
       error: () => console.error('Error sending request')
     });
   }
+
+
 
 
 }
