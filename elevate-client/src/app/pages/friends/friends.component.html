@@ -1,16 +1,65 @@
-<!--<p>friends works!</p>-->
-<h2>Friends Page</h2>
+<!--&lt;!&ndash;<p>friends works!</p>&ndash;&gt;-->
+<!--<h2>Friends Page</h2>-->
 
-<div class="search-bar">
-  <form (ngSubmit)="findUser()">
-    <input type="search" class="form-control" [(ngModel)]="friendToSearch" name="friend" placeholder="Search by username..." />
-    <button>Search</button>
-  </form>
+<!--<div class="search-bar">-->
+<!--  <form (ngSubmit)="findUser()">-->
+<!--    <input type="search" class="form-control" [(ngModel)]="friendToSearch" name="friend" placeholder="Search by username..." />-->
+<!--    <button>Search</button>-->
+<!--  </form>-->
+<!--</div>-->
+
+<!--<div *ngIf="result">-->
+<!--  <strong> Username: {{result.username}}</strong>-->
+<!--  &lt;!&ndash; Later: Add Friend / Requested / ✓ Friend &ndash;&gt;-->
+<!--  <button (click)="sendRequest(result.id)">Add Friend</button>-->
+<!--</div>-->
+<!--<p *ngIf="error">{{ error }}</p>-->
+
+<h2>Friends</h2>
+
+<!-- ────────────── Search / Add ────────────── -->
+<form (ngSubmit)="findUser()" class="space-x-2 mb-4">
+  <input type="text"
+         [(ngModel)]="friendToSearch"
+         name="friend"
+         placeholder="Exact username…">
+  <button>Search</button>
+</form>
+
+<div *ngIf="searchResult" class="mb-4">
+  <span>{{ searchResult.username }}</span>
+  <button (click)="sendRequest(searchResult.id)"
+          [disabled]="pendingAdd">
+    {{ pendingAdd ? 'Pending…' : 'Add Friend' }}
+  </button>
 </div>
 
-<div *ngIf="result">
-  <strong> Username: {{result.username}}</strong>
-  <!-- Later: Add Friend / Requested / ✓ Friend -->
-  <button (click)="sendRequest(result.id)">Add Friend</button>
-</div>
-<p *ngIf="error">{{ error }}</p>
+<p *ngIf="error" class="text-red-600 mb-4">{{ error }}</p>
+
+<!-- ────────────── Incoming requests ────────────── -->
+<h3>Incoming requests</h3>
+<ul *ngIf="incoming.length; else noReq">
+  <li *ngFor="let r of incoming" class="flex gap-2 items-center mb-1">
+    {{ r.senderUsername }}
+    <button (click)="actOnRequest(r,'accept')"
+            [disabled]="busyIds.has(r.requestId)">Accept</button>
+    <button (click)="actOnRequest(r,'decline')"
+            [disabled]="busyIds.has(r.requestId)">Decline</button>
+  </li>
+</ul>
+<ng-template #noReq>
+  <p class="italic text-gray-500">No pending requests</p>
+</ng-template>
+
+<!-- ────────────── Friends list ────────────── -->
+<h3 class="mt-6">Your friends</h3>
+<ul *ngIf="friends.length; else noFriends">
+  <li *ngFor="let f of friends" class="flex gap-2 items-center mb-1">
+    {{ f.username }}
+    <button (click)="removeFriend(f.id)"
+            [disabled]="busyIds.has(f.id)">Remove</button>
+  </li>
+</ul>
+<ng-template #noFriends>
+  <p class="italic text-gray-500">You don’t have friends yet</p>
+</ng-template>

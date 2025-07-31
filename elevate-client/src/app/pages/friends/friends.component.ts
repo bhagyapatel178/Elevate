@@ -67,7 +67,7 @@ export class FriendsComponent implements OnInit{
     if (this.pendingAdd) { return; }
     this.pendingAdd = true;
 
-    this.http.post<void>('/api/friend-requests', { receiverId: id })
+    this.http.post<void>('/api/friend-request/send',id)
       .subscribe({
         next: ()  => {/* keep “Pending…” label */},
         error: () => { this.pendingAdd = false; }
@@ -75,7 +75,7 @@ export class FriendsComponent implements OnInit{
   }
 
   loadIncoming(): void {
-    this.http.get<IncomingRequest[]>('/api/friend-requests/incoming')
+    this.http.get<IncomingRequest[]>('/api/friend-request')
       .subscribe(list => this.incoming = list);
   }
 
@@ -84,8 +84,8 @@ export class FriendsComponent implements OnInit{
     this.busyIds.add(r.requestId);
 
     const call = action === 'accept'
-      ? this.http.put<void>(`/api/friend-requests/${r.requestId}/accept`,  null)
-      : this.http.put<void>(`/api/friend-requests/${r.requestId}/decline`, null);
+      ? this.http.put<void>( `/api/friend-request/${r.requestId}/accept`, null)
+      : this.http.delete<void>(`/api/friend-request/${r.requestId}/cancel`);
 
     call.subscribe({
       next: () => {
@@ -99,7 +99,7 @@ export class FriendsComponent implements OnInit{
 
   //friends
   loadFriends(): void {
-    this.http.get<FriendResponse[]>('/api/friends')
+    this.http.get<FriendResponse[]>('/api/friend')
       .subscribe(list => this.friends = list);
   }
 
@@ -107,7 +107,7 @@ export class FriendsComponent implements OnInit{
     if (this.busyIds.has(id)) { return; }
     this.busyIds.add(id);
 
-    this.http.delete<void>(`/api/friends/${id}`)
+    this.http.delete<void>(`/api/friend/${id}`)
       .subscribe({
         next: () => {
           this.friends = this.friends.filter(f => f.id !== id);

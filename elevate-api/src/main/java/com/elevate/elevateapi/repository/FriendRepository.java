@@ -3,8 +3,10 @@ package com.elevate.elevateapi.repository;
 import com.elevate.elevateapi.dto.FriendResponse;
 import com.elevate.elevateapi.entity.Friend;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +27,8 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
     """)
     List<FriendResponse> findFriendsOf(@Param("id") Long id);
 
+    @Modifying
+    @Transactional
     @Query("""
         delete from Friend f
         where f.user.id   = :a and f.friend.id = :b
