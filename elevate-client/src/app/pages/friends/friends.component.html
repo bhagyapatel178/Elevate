@@ -17,24 +17,40 @@
 
 <h2>Friends</h2>
 
-<!-- ────────────── Search / Add ────────────── -->
-<form (ngSubmit)="findUser()" class="space-x-2 mb-4">
-  <input type="text"
-         [(ngModel)]="friendToSearch"
-         name="friend"
-         placeholder="Exact username…">
-  <button>Search</button>
-</form>
+<button class="add-friend-btn" (click)="toggleFinder()" aria-label="Find friends">
+  <img src="/add-user.png" alt="" class="logo" />
+  <span class="label">Find friends</span>
+</button>
 
-<div *ngIf="searchResult" class="mb-4">
-  <span>{{ searchResult.username }}</span>
-  <button (click)="sendRequest(searchResult.id)"
-          [disabled]="pendingAdd">
-    {{ pendingAdd ? 'Pending…' : 'Add Friend' }}
-  </button>
+
+<!-- Back-drop (clicking it closes the popup) -->
+<div class="overlay" *ngIf="showFinder" (click)="toggleFinder()">
+
+<!-- Popup card in the top-right -->
+  <div class="popup" *ngIf="showFinder" (click)="$event.stopPropagation()">
+    <div class="find-friends-container">
+
+      <h3>Find Friends</h3>
+
+      <div class="search-bar">
+        <form (ngSubmit)="findUser()">
+          <input type="search" class="form-control" [(ngModel)]="friendToSearch" name="friend" placeholder="Enter username…">
+          <button>Search</button>
+        </form>
+      </div>
+
+      <div *ngIf="searchResult" class="search-res">
+        <span>{{ searchResult.username }}</span>
+        <button (click)="sendRequest(searchResult.id)"
+                [disabled]="pendingAdd">
+          {{ pendingAdd ? 'Pending…' : 'Add Friend' }}
+        </button>
+      </div>
+
+      <p *ngIf="error">{{ error }}</p>
+    </div>
+  </div>
 </div>
-
-<p *ngIf="error" class="text-red-600 mb-4">{{ error }}</p>
 
 <!-- ────────────── Incoming requests ────────────── -->
 <h3>Incoming requests</h3>
@@ -61,5 +77,5 @@
   </li>
 </ul>
 <ng-template #noFriends>
-  <p class="italic text-gray-500">You don’t have friends yet</p>
+  <p class="italic text-gray-500">You don’t have friends yet. Press the top right icon find your friends!</p>
 </ng-template>

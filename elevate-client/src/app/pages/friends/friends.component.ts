@@ -32,6 +32,8 @@ export class FriendsComponent implements OnInit{
   searchResult?: UserSearchResult
   pendingAdd = false;
 
+  showFinder = false;
+
   incoming: IncomingRequest[] = [];
   friends : FriendResponse[]  = [];
   busyIds = new Set<number>();          // disables buttons per row
@@ -43,6 +45,8 @@ export class FriendsComponent implements OnInit{
     this.loadFriends();
   }
 
+
+  toggleFinder(): void { this.showFinder = !this.showFinder; }
 
   findUser(): void {
     this.error = '';
@@ -116,5 +120,14 @@ export class FriendsComponent implements OnInit{
         error: () => this.busyIds.delete(id)
       });
   }
+
+
+  // display info about users
+  // when searching, show either friends, sent a request already, neither...
+  // -> a pop up on the side?
+  // style friends page
+  // directs them to a compare page
+
+  //
 
 }

@@ -1,14 +1,101 @@
-.search-bar {
-  margin: 2rem;
+h2{
+  margin-top: 2rem;
+  text-align: center;
+}
+h3{
+  margin-left:1rem
 }
 
-.form-control {
-  width:40%;
-  border-radius: 10px;
-  padding: 0.75rem 1rem;
-  border: 1px solid #e0e0e0;
-  font-size: 1rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+.find-friends-container{
+  width: 40%;
+  padding: 2rem;
+
+  .search-bar{
+    button{
+      //transform: translateX(-105%);
+    }
+  }
+  .search-res{
+    margin-left: 1rem;
+  }
+
+  .search-res{
+    span{
+      font-weight: bold;
+    }
+  }
+
+  .form-control {
+    width: 60%;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e0e0e0;
+    font-size: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    font-weight: bold;
+  }
+
+  p{
+    margin-left: 1rem;
+    font-weight: bold}
 }
 
 
+
+/* find friends button */
+.add-friend-btn {
+  position: fixed;
+  top: 7rem;
+  right: 5rem;
+  display: flex;
+  gap: .35rem;
+  padding: .55rem .9rem;
+  border: none;
+  border-radius: 9999px;
+  font-weight: 600;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+  cursor: pointer;
+  z-index: 1000;
+
+  .logo {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+/*Back-drop */
+.overlay {
+  position: fixed;
+  inset: 0;
+  //background: rgba(0, 0, 0, .4);
+  background: transparent;
+  //backdrop-filter: blur(2px);
+}
+
+.popup {
+  position: fixed;
+  top: 7rem;
+  right: 5rem;
+  width: min(380px, 90vw);
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .2);
+  padding: 1.25rem 1rem;
+  z-index: 999;
+
+  /* optional: smooth fade/slide */
+  animation: slideIn .25s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Keep your existing .find-friends-container rules;
+   you can override width/padding so it fills the popup: */
+.popup .find-friends-container {
+  width: 100%;
+  padding: 0;
+}
