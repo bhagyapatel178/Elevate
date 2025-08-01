@@ -7,8 +7,8 @@ FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /build
 
 # copy build descriptors first to leverage Docker layer cache
-COPY pom.xml .
-COPY src ./src
+COPY elevate-api/pom.xml .
+COPY elevate-api/src ./src
 
 # -B = batch mode,   -DskipTests keeps the build fast
 RUN mvn -B package -DskipTests
