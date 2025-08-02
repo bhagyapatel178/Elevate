@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit{
     }));
 
     logsToSend.forEach(log => {
-      this.http.post('api/progress-logs', log).subscribe({
+      this.http.post('/api/progress-logs', log).subscribe({
         next: () => this.fetchLogs(),
         error: err => alert(err.error?.message)
       });
