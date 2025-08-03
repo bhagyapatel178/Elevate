@@ -6,18 +6,15 @@
 @import '../node_modules/angular-calendar/scss/angular-calendar';
 
 
-/* styles.scss */
-$primary-color: #007bff;
-$accent-color: #6c757d;
-$bg-color: #f9f9f9;
-$text-color: #333;
+
 
 body {
   font-family: Arial, sans-serif;
   background-color: white;
   margin: 0;
   padding: 0;
-  color: $text-color;
+  color: #333;
+
 }
 
 a {

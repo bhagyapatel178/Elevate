@@ -1,10 +1,15 @@
 nav {
   background-color: #ffffff;
-  padding: 0.01rem 5rem; /* Reduced vertical padding for a smaller height , 0.75rem 0.75rem for top botop, for left right*/
+  padding: 0.1rem 1rem; /* Reduced vertical padding for a smaller height , 0.75rem 0.75rem for top botop, for left right*/
   border-bottom: 1px solid #ddd;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  position: sticky;
+  top:0;
+  z-index:1000;
+  flex-wrap: wrap;
+  min-width: 0;
 
 
   .logo-container {
@@ -46,4 +51,14 @@ nav {
   a[routerLink="/register"]{
     margin-left: auto; /* Pushes itself and subsequent items to the right */
   }
+}
+
+@media (min-width: 768px) {
+  nav { padding: 0.1rem 5rem; }
+}
+
+@media (max-width: 500px) {
+  nav a{font-size: 0.89rem;}
+  .logo-container .logo {height: 1.1rem;}
+  nav h2{font-size: 1.1rem;}
 }
