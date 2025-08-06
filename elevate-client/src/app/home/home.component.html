@@ -1,6 +1,11 @@
 <div>
 
+      <button type="button"
+              (click)="showAddForm = !showAddForm">
+        + Log Today's Lift
+      </button>
   <div class="cal-header">
+
     <h2 class="cal-title">
       {{ viewDate | calendarDate:(view + 'ViewTitle') }}
     </h2>
@@ -38,32 +43,46 @@
   </mwl-calendar-month-view>
 
 
+  <ng-container *ngIf="showAddForm">
+    <!-- dark backdrop -->
+    <div class="modal-backdrop" (click)="showAddForm = false"></div>
 
-  <h3>Add New Log</h3>
+    <!-- the pop-up card -->
+    <section class="add-log-card" role="dialog" aria-modal="true">
 
-  <form (ngSubmit)="createLog()" #registerForm="ngForm">
-    <!-- Set Lift Type + Variation Once -->
-    <select name="liftType" [(ngModel)]="newLift.liftType" required>
-      <option value="" disabled selected hidden>Select Lift</option>
-      <option *ngFor="let lift of liftOptions" [value]="lift.value">
-        {{ lift.label }}
-      </option>
-    </select>
-    <input type="text" placeholder="Variation" [(ngModel)]="newLift.variation" name="variation" required>
+      <button type="button" class="close" (click)="showAddForm = false">✕</button>
 
+      <h3>Log Today's Lift</h3>
 
-    <!-- Multiple Set Entries -->
-    <div *ngFor="let set of sets; let i = index" class="set-row">
+      <form #registerForm="ngForm" (ngSubmit)="createLog(); showAddForm = false">
 
-      <input type="number" placeholder="Weight (kg)" [(ngModel)]="sets[i].weight" [name]="'weight' + i" required>
-      <input type="number" placeholder="Reps" [(ngModel)]="sets[i].reps" [name]="'reps' + i" required>
+        <!-- Lift & variation -->
+        <select name="liftType" [(ngModel)]="newLift.liftType" required>
+          <option value="" disabled selected hidden>Select Lift</option>
+          <option *ngFor="let lift of liftOptions" [value]="lift.value">{{ lift.label }}</option>
+        </select>
 
-      <!-- Optional: remove button -->
-      <button type="button" (click)="sets.splice(i, 1)" *ngIf="sets.length > 1">X</button>
-    </div>
+        <input name="variation"
+               type="text"
+               placeholder="Variation (eg Inclined, Weighted...)"
+               [(ngModel)]="newLift.variation"
+               required>
 
-    <button type="button" (click)="sets.push({weight: null, reps: null})">+ Add Set</button>
-    <br><br>
-    <button type="submit">Submit Log</button>
-  </form>
+        <!-- Sets -->
+        <div class="set-row" *ngFor="let set of sets; let i = index">
+          <input  type="number"
+                  placeholder="Weight (kg)"
+                  [(ngModel)]="sets[i].weight" [name]="'weight'+i" required>
+          <input  type="number"
+                  placeholder="Reps"
+                  [(ngModel)]="sets[i].reps" [name]="'reps'+i" required>
+          <button type="button" (click)="sets.splice(i,1)" *ngIf="sets.length>1" class="delete">✕</button>
+        </div>
+
+        <button type="button" (click)="sets.push({weight:null,reps:null})">+ Add Set</button>
+        <br><br>
+        <button type="submit">Submit Log</button>
+      </form>
+    </section>
+  </ng-container>
 </div>

@@ -17,6 +17,7 @@ div {
     select,
     input {
       margin-bottom: 1rem;
+      width: 50%;
     }
     button{
       padding: 0.5rem 0;
@@ -37,7 +38,48 @@ div {
   }
 
 
+  /* darkened page while modal is open */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;                          /* shorthand for top/right/bottom/left:0 */
+    background: rgba(0, 0, 0, .35);
+    z-index: 1000;
+  }
+
+  /* the pop-up card */
+  .add-log-card {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;                     /* one level above the backdrop */
+
+    width: min(90vw, 550px);
+    padding: 2rem 3rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+
+    .delete{
+      transform: translate(100%, -10%);
+    }
+
+    .close {
+      position: absolute;
+      top: .75rem;
+      right: .75rem;
+      border: none;
+      background: transparent;
+      font-size: 1.25rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+
+  }
+
+
 
 
 
 }
+

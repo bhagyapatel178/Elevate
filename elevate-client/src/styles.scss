@@ -146,6 +146,8 @@ select {
   color: black;
 }
 
+
+
 //.cal-open-day-events {
 //  display: none !important;
 //}
@@ -156,7 +158,7 @@ select {
 
 .cal-day-cell.cal-today .cal-day-number {
   background-color: #f30000;
-  color: white; /* Make the text white so it's visible on red background */
+  color: white; /*text white so it's visible on red background */
   border-radius: 50%;
   width: 25px;
   height: 25px;
@@ -165,4 +167,37 @@ select {
   justify-content: center;
   margin: 10px 10px ;
 
+}
+
+.cal-month-view .cal-day-badge {
+  display: none !important;
+}
+
+.cal-month-view .cal-event {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 2px;
+}
+
+
+
+
+
+
+.cal-month-view .cal-cell-top {
+  min-height: 78px;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.cal-events {
+  flex: 1;
+  align-items: flex-end;
+  margin: 3px;
+  line-height: 10px;
+  display: flex;
+  flex-wrap: wrap;
 }

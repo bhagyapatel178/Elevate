@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit{
   events: CalendarEvent[] = [];
 
   activeDayIsOpen = false;
+  showAddForm = false;
 
   newLift = {
     liftType: '',
@@ -50,10 +51,10 @@ export class HomeComponent implements OnInit{
   ];
 
   private readonly LIFT_COLOURS: Record<string, EventColor> = {
-    BENCH_PRESS:  { primary: '#ad2121', secondary: '#FAE3E3' },
+    BENCH_PRESS:  { primary: '#fd1717', secondary: '#FAE3E3' },
     SQUAT:        { primary: '#1e90ff', secondary: '#D1E8FF' },
-    DEADLIFT:     { primary: '#e3bc08', secondary: '#FDF1BA' },
-    DUMBBELL_PRESS:{ primary: '#1eff78', secondary: '#D1E8FF' },
+    DEADLIFT:     { primary: '#e3d808', secondary: '#FDF1BA' },
+    DUMBBELL_PRESS:{ primary: '#00a945', secondary: '#D1E8FF' },
     PULL_UPS:     { primary: '#e91eff', secondary: '#D1E8FF' },
     DIPS:         { primary: '#08e3c9', secondary: '#FDF1BA' }
   };
