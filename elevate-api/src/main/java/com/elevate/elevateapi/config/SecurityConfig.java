@@ -35,7 +35,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**")
                 .permitAll()
-                .requestMatchers("/api/users/register", "/api/users/login")
+                .requestMatchers("/api/users/register", "/api/users/login", "/api/users/auth/google")
                 .permitAll()
                 .anyRequest().authenticated())
         .sessionManagement(session

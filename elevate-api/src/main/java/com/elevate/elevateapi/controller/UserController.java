@@ -8,6 +8,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +41,12 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Map<String,String>> login(@RequestBody LoginUserRequest loginUserRequest){
         String token =  userService.verify(loginUserRequest);
+        return ResponseEntity.ok(Map.of("token", token));
+    }
+
+    @PostMapping("/auth/google")
+    public ResponseEntity<Map<String,String>> googleSignIn(@RequestBody GoogleToken idToken) throws GeneralSecurityException, IOException {
+        String token = userService.googleVerify(idToken);
         return ResponseEntity.ok(Map.of("token", token));
     }
 
