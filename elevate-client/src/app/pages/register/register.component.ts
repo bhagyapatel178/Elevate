@@ -28,8 +28,7 @@ export class RegisterComponent implements OnInit{
   ngOnInit(){
     google.accounts.id.initialize({
       client_id: "162014496609-g3sutimbg134rcaonprpi8qoaeqddq06.apps.googleusercontent.com",
-      callback:'',
-      credentials:'',
+      callback: (response:any) => this.handleCredentialResponse(response)
     })
 
     google.accounts.id.renderButton(document.getElementById('googleBtn'),  {
@@ -47,6 +46,18 @@ export class RegisterComponent implements OnInit{
         this.router.navigate(['/login']);
       },
       error: err => alert('Error registering user')
+    })
+  }
+
+
+  handleCredentialResponse(response:any){
+    this.http.post<{token: string}>('/api/users/auth/google', {idToken  : response.credential}).subscribe({
+      next: (res: any) => {
+        localStorage.setItem('token', res.token)
+        this.router.navigate(['']);
+        // alert('Login Successful')
+      },
+      error: err => alert('Login failed')
     })
   }
 
