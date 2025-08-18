@@ -5,17 +5,28 @@ import com.elevate.elevateapi.entity.ProgressLog;
 import com.elevate.elevateapi.entity.User;
 import com.elevate.elevateapi.repository.ProgressLogRepository;
 import com.elevate.elevateapi.repository.UserRepository;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 
 @Service
 public class UserService {
@@ -25,6 +36,7 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final JWTService jwtService;
     private final ProgressLogRepository progressLogRepository;
+
 
 
     public UserService(
@@ -39,7 +51,12 @@ public class UserService {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.progressLogRepository = progressLogRepository;
+
+
     }
+
+    private JsonFactory jsonFactory;
+
 
     public void registerUser(RegisterUserRequest request){
         User user = new User();
@@ -94,9 +111,54 @@ public class UserService {
         return "Fail";
     }
 
+    public String googleVerify (GoogleToken token) throws AuthenticationException, GeneralSecurityException, IOException {
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+                .setAudience(Collections.singletonList("162014496609-g3sutimbg134rcaonprpi8qoaeqddq06.apps.googleusercontent.com"))
+                .build();
+
+        String retToken = "";
+        GoogleIdToken idToken = verifier.verify(token.idToken());
+        if (idToken != null) {
+            Payload payload = idToken.getPayload();
+
+            String provider = "google";
+            String providerId = payload.getSubject(); // Google sub
+
+            // Get profile information from payload
+            String email = payload.getEmail();
+            boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
+
+            Optional<User> existingUser = Optional.ofNullable(userRepository.findByProviderAndProviderId(provider, providerId));
+            if (existingUser.isPresent()) {
+                // Returning Google user → generate JWT
+                retToken = jwtService.generateToken(existingUser.get().getUsername());
+            } else if (!existsByEmail(email)) {
+                // First Google login → create user with provider+providerId
+                String username = email.substring(0, email.indexOf("@")); // gets prefix of email
+                User newUser = new User();
+                newUser.setUsername(username);
+                newUser.setEmail(email);
+                newUser.setProvider(provider);
+                newUser.setProviderId(providerId);
+                userRepository.save(newUser);
+                retToken = jwtService.generateToken(newUser.getUsername());
+            } else {
+                throw new org.springframework.web.server.ResponseStatusException(
+                        HttpStatus.CONFLICT, "Email already registered with password login"
+                );
+                }
+
+        } else {
+            throw new org.springframework.security.core.AuthenticationException("Invalid Google ID token") {};
+        }
+        return retToken;
+    }
+
     public boolean exists(Long id){
         return userRepository.existsById(id);
     }
+
+    public boolean existsByEmail(String email){return userRepository.existsByEmail(email);}
 
     public boolean existsByUsername(String username){return userRepository.existsByUsername(username);}
 

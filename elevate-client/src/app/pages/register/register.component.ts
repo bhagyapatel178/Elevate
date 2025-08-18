@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
 import {NgIf} from '@angular/common';
 
+declare const google: any;
 @Component({
   selector: 'app-register',
   imports: [FormsModule,NgIf],
@@ -11,7 +12,7 @@ import {NgIf} from '@angular/common';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
 
   formData= {
     username:'',
@@ -22,6 +23,21 @@ export class RegisterComponent {
   showPassword = false;
 
   constructor(private http: HttpClient, private router: Router) {
+  }
+
+  ngOnInit(){
+    google.accounts.id.initialize({
+      client_id: "162014496609-g3sutimbg134rcaonprpi8qoaeqddq06.apps.googleusercontent.com",
+      callback:'',
+      credentials:'',
+    })
+
+    google.accounts.id.renderButton(document.getElementById('googleBtn'),  {
+      type: "standard",
+      size: "large",
+      shape: "rectangular",
+      text: "continue_with"
+    })
   }
 
   onSubmit(){

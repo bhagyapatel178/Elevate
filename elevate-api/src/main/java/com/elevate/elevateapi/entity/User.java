@@ -30,6 +30,14 @@ public class User {
 
     private String password; // hash
 
+
+    @Column(nullable = true)
+    private String provider;   // e.g. "google"
+
+    @Column(nullable = true, unique = true)
+    private String providerId; // Google’s "sub" claim (their stable user id)
+
+
     @Enumerated(EnumType.STRING)
     private GenderType gender;
 
