@@ -32,7 +32,9 @@ export class LoginComponent implements AfterViewInit{
       type: "standard",
       size: "large",
       shape: "rectangular",
-      text: "continue_with"
+      text: "continue_with",
+      personalization: "off"
+      // width: "200"
     })
   }
 
