@@ -34,7 +34,7 @@ export class LoginComponent implements AfterViewInit{
       shape: "rectangular",
       text: "continue_with",
       theme: "outline",
-      // width: "200"
+      width: "300"
     })
   }
 
