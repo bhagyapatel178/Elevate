@@ -10,7 +10,7 @@ declare const google: any;
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements AfterViewInit{
   credentials= {
     username:'',
     password:'',
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit{
   constructor(private http: HttpClient,private router: Router) {
   }
 
-  ngOnInit(){
+  ngAfterViewInit(){
     google.accounts.id.initialize({
       client_id: "162014496609-g3sutimbg134rcaonprpi8qoaeqddq06.apps.googleusercontent.com",
       callback: (response:any) => this.handleCredentialResponse(response)
