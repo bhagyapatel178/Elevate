@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit{
       shape: "rectangular",
       text: "continue_with",
       theme: "outline",
-      // width: "200"
+      width: "300"
     })
   }
 
