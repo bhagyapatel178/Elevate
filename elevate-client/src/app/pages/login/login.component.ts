@@ -24,7 +24,8 @@ export class LoginComponent implements AfterViewInit{
   ngAfterViewInit(){
     google.accounts.id.initialize({
       client_id: "162014496609-g3sutimbg134rcaonprpi8qoaeqddq06.apps.googleusercontent.com",
-      callback: (response:any) => this.handleCredentialResponse(response)
+      callback: (response:any) => this.handleCredentialResponse(response),
+      auto_select: false
     })
 
     google.accounts.id.renderButton(document.getElementById('googleBtn'),  {
