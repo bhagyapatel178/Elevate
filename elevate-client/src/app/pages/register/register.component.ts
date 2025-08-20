@@ -33,9 +33,11 @@ export class RegisterComponent implements OnInit{
 
     google.accounts.id.renderButton(document.getElementById('googleBtn'),  {
       type: "standard",
-      size: "large",
+      size: "medium",
       shape: "rectangular",
-      text: "continue_with"
+      text: "continue_with",
+      theme: "outline",
+      // width: "200"
     })
   }
 
