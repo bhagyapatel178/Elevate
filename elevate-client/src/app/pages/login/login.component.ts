@@ -30,10 +30,10 @@ export class LoginComponent implements AfterViewInit{
 
     google.accounts.id.renderButton(document.getElementById('googleBtn'),  {
       type: "standard",
-      size: "large",
+      size: "medium",
       shape: "rectangular",
       text: "continue_with",
-      personalization: "off"
+      theme: "outline",
       // width: "200"
     })
   }
