@@ -1,16 +1,16 @@
 <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
-  <h2>Register</h2><br>
+  <h2 class="heading">Register</h2><br>
   <div *ngIf="username.invalid && username.touched" style="color:red">
     Username must be 5–20 characters.
   </div>
-  <input type='text' placeholder='Username' [(ngModel)]="formData.username" name='username'
+  <input type='text' class="form-control" placeholder='Username' [(ngModel)]="formData.username" name='username'
          required minlength="5" maxlength="20"
          #username="ngModel"><br>
 
   <div *ngIf="email.invalid && email.touched" style="color:red">
     Valid email required.
   </div>
-  <input type='email' placeholder='Email' [(ngModel)]="formData.email" name='email'
+  <input type='email' class="form-control" placeholder='Email' [(ngModel)]="formData.email" name='email'
          required
          #email="ngModel"><br>
 
@@ -18,14 +18,14 @@
     <div *ngIf="password.invalid && password.touched" style="color:red">
       Password must be at least 5 characters.
     </div>
-    <input [type]="showPassword ? 'text' : 'password'" placeholder='Password' [(ngModel)]="formData.password" name='password'
+    <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder='Password' [(ngModel)]="formData.password" name='password'
            required minlength="5"
            #password="ngModel">
-    <button type="button" (click)="showPassword = !showPassword">{{ showPassword ? 'Hide' : 'Show' }}</button>
+    <button type="button" class="btn" (click)="showPassword = !showPassword">{{ showPassword ? 'Hide' : 'Show' }}</button>
   </div>
   <br>
 
-  <button type='submit' class="enter" [disabled]="registerForm.invalid">Register</button>
+  <button type='submit' class="enter btn" [disabled]="registerForm.invalid">Register</button>
 
   <div id="googleBtn"></div>
 </form>

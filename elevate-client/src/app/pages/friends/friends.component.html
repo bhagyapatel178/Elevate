@@ -1,4 +1,4 @@
-<button class="add-friend-btn" (click)="toggleFinder()" aria-label="Find friends">
+<button class="add-friend-btn btn" (click)="toggleFinder()" aria-label="Find friends">
   <img src="/add-user.png" alt="" class="logo" />
   <span class="label">Find friends</span>
 </button>
@@ -15,13 +15,13 @@
       <div class="search-bar">
         <form (ngSubmit)="findUser()">
           <input type="search" class="form-control" [(ngModel)]="friendToSearch" name="friend" placeholder="Enter username…">
-          <button>Search</button>
+          <button class="btn">Search</button>
         </form>
       </div>
 
       <div *ngIf="searchResult" class="search-res">
         <span>{{ searchResult.username }}</span>
-        <button (click)="sendRequest(searchResult.id)" [disabled]="pendingAdd">
+        <button class="btn" (click)="sendRequest(searchResult.id)" [disabled]="pendingAdd">
           {{ pendingAdd ? 'Pending' : 'Add Friend' }}
         </button>
       </div>
@@ -33,20 +33,20 @@
 
 <!--tab-->
 <nav class="friend-tabs">
-  <button class="tab" [class.active]="tab==='friends'" (click)="tab='friends'">Friends</button>
-  <button class="tab" [class.active]="tab==='requests'" (click)="tab='requests'">Requests
+  <button class="tab btn" [class.active]="tab==='friends'" (click)="tab='friends'">Friends</button>
+  <button class="tab btn" [class.active]="tab==='requests'" (click)="tab='requests'">Requests
     <span *ngIf="incoming.length" class="badge">{{ incoming.length }}</span>
   </button>
 </nav>
 
 
 <section *ngIf="tab==='friends'">
-  <h2>Your Friends</h2>
+  <h2 class="heading">Your Friends</h2>
 
   <div class="friend-list" *ngIf="friends.length; else noFriends">
     <article *ngFor="let f of friends" class="friend-card">
 
-      <button class="menu-btn"
+      <button class="menu-btn btn"
               (click)="toggleMenu(f.id, 'friend')">⋮</button>
 <!--      ⋯-->
       <h4>{{ f.username }}</h4>
@@ -54,13 +54,13 @@
       <!-- room in the middle for future info -->
       <div class="placeholder"> <!-- empty for now --> </div>
 
-      <button class="compare-btn"
+      <button class="compare-btn btn"
               (click)="compareWith(f.id)">Compare →</button>
 
       <!-- pop-over -->
       <div class="popover"
            *ngIf="openMenuId===f.id && openMenuType==='friend'">
-        <button (click)="removeFriend(f.id)">Remove friend</button>
+        <button class="btn" (click)="removeFriend(f.id)">Remove friend</button>
       </div>
     </article>
   </div>
@@ -71,16 +71,16 @@
 </section>
 
 <section *ngIf="tab==='requests'">
-  <h2>Incoming Requests</h2>
+  <h2 class="heading">Incoming Requests</h2>
 
   <ul class="request-list" *ngIf="incoming.length; else noReq">
     <li *ngFor="let r of incoming" class="request-tube">
       <span class="name">{{ r.senderUsername }}</span>
 
-      <button class="icon-btn" (click)="actOnRequest(r,'accept')"
+      <button class="icon-btn btn" (click)="actOnRequest(r,'accept')"
               [disabled]="busyIds.has(r.requestId)">Accept</button>
 
-      <button class="icon-btn" (click)="actOnRequest(r,'decline')"
+      <button class="icon-btn btn" (click)="actOnRequest(r,'decline')"
               [disabled]="busyIds.has(r.requestId)">✕</button>
     </li>
   </ul>
