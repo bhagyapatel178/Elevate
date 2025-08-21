@@ -1,6 +1,7 @@
 <div>
 
       <button type="button"
+              class="btn"
               (click)="showAddForm = !showAddForm">
         + Log Today's Lift
       </button>
@@ -11,6 +12,7 @@
     </h2>
 
     <button
+      class="btn"
       mwlCalendarPreviousView
       [(viewDate)]="viewDate"
       [view]="view">
@@ -18,12 +20,14 @@
     </button>
 
     <button
+      class="btn"
       mwlCalendarToday
       [(viewDate)]="viewDate">
       Today
     </button>
 
     <button
+      class="btn"
       mwlCalendarNextView
       [(viewDate)]="viewDate"
       [view]="view">
@@ -50,19 +54,20 @@
     <!-- the pop-up card -->
     <section class="add-log-card" role="dialog" aria-modal="true">
 
-      <button type="button" class="close" (click)="showAddForm = false">✕</button>
+      <button type="button" class="close btn" (click)="showAddForm = false">✕</button>
 
       <h3>Log Today's Lift</h3>
 
       <form #registerForm="ngForm" (ngSubmit)="createLog(); showAddForm = false">
 
         <!-- Lift & variation -->
-        <select name="liftType" [(ngModel)]="newLift.liftType" required>
+        <select class="form-control" name="liftType" [(ngModel)]="newLift.liftType" required>
           <option value="" disabled selected hidden>Select Lift</option>
           <option *ngFor="let lift of liftOptions" [value]="lift.value">{{ lift.label }}</option>
         </select>
 
         <input name="variation"
+               class="form-control"
                type="text"
                placeholder="Variation (eg Inclined, Weighted...)"
                [(ngModel)]="newLift.variation"
@@ -71,17 +76,19 @@
         <!-- Sets -->
         <div class="set-row" *ngFor="let set of sets; let i = index">
           <input  type="number"
+                  class="form-control"
                   placeholder="Weight (kg)"
                   [(ngModel)]="sets[i].weight" [name]="'weight'+i" required>
           <input  type="number"
+                  class="form-control"
                   placeholder="Reps"
                   [(ngModel)]="sets[i].reps" [name]="'reps'+i" required>
-          <button type="button" (click)="sets.splice(i,1)" *ngIf="sets.length>1" class="delete">✕</button>
+          <button type="button" (click)="sets.splice(i,1)" *ngIf="sets.length>1" class="delete btn">✕</button>
         </div>
 
-        <button type="button" (click)="sets.push({weight:null,reps:null})">+ Add Set</button>
+        <button type="button" class="btn" (click)="sets.push({weight:null,reps:null})">+ Add Set</button>
         <br><br>
-        <button type="submit">Submit Log</button>
+        <button type="submit" class="btn">Submit Log</button>
       </form>
     </section>
   </ng-container>
