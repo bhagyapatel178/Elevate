@@ -15,13 +15,13 @@
       <div class="search-bar">
         <form (ngSubmit)="findUser()">
           <input type="search" class="form-control" [(ngModel)]="friendToSearch" name="friend" placeholder="Enter username…">
-          <button>Search</button>
+          <button class="app-btn">Search</button>
         </form>
       </div>
 
       <div *ngIf="searchResult" class="search-res">
         <span>{{ searchResult.username }}</span>
-        <button (click)="sendRequest(searchResult.id)" [disabled]="pendingAdd">
+        <button class="app-btn outline" (click)="sendRequest(searchResult.id)" [disabled]="pendingAdd">
           {{ pendingAdd ? 'Pending' : 'Add Friend' }}
         </button>
       </div>
@@ -41,7 +41,7 @@
 
 
 <section *ngIf="tab==='friends'">
-  <h2>Your Friends</h2>
+  <h2 class="heading">Your Friends</h2>
 
   <div class="friend-list" *ngIf="friends.length; else noFriends">
     <article *ngFor="let f of friends" class="friend-card">
@@ -71,7 +71,7 @@
 </section>
 
 <section *ngIf="tab==='requests'">
-  <h2>Incoming Requests</h2>
+  <h2 class="heading">Incoming Requests</h2>
 
   <ul class="request-list" *ngIf="incoming.length; else noReq">
     <li *ngFor="let r of incoming" class="request-tube">

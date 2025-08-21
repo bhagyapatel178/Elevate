@@ -1,5 +1,5 @@
 <div *ngIf="userProfile.username">
-    <h2>Profile</h2>
+    <h2 class="heading">Profile</h2>
   <!-- info icon -->
 <!--  <span class="info-icon"-->
 <!--        (click)="showInfo = !showInfo"-->
@@ -83,7 +83,7 @@
     <!-- edit button row -->
     <div class="btn-row-right">
       <!-- Edit button stays the same -->
-      <button class="edit-btn" (click)="isEditing = true">Edit Profile</button>
+      <button class="edit-btn app-btn outline" (click)="isEditing = true">Edit Profile</button>
 
       <!-- pop-up: *only* when biometrics are incomplete and showInfo is true -->
 <!--      <div *ngIf="biometricsIncomplete && showInfo"-->
@@ -107,21 +107,21 @@
       <div class="card">
         <label>
           <span class="label">Username</span>
-          <input class="value" type="text" [(ngModel)]="updatedProfile.username" name="username">
+          <input class="value form-control" type="text" [(ngModel)]="updatedProfile.username" name="username">
         </label>
       </div>
 
       <div class="card">
       <label>
         <span class="label">Email</span>
-        <input class="value" type="email" [(ngModel)]="updatedProfile.email" name="email">
+        <input class="value form-control" type="email" [(ngModel)]="updatedProfile.email" name="email">
       </label>
       </div>
 
       <div class="card">
         <label>
           <span class="label">Preferred Units</span>
-          <select class="value" [(ngModel)]="updatedProfile.preferredUnitSystem" name="units">
+          <select class="value form-control" [(ngModel)]="updatedProfile.preferredUnitSystem" name="units">
             <option class="value" value="" disabled selected hidden>Select unit system</option>
             <option class="value" *ngFor="let u of unitOptions" [value]="u.value">
               {{ u.label }}
@@ -134,7 +134,7 @@
       <div class="card">
         <label>
           <span class="label">Gender</span>
-          <select class="value"[(ngModel)]="updatedProfile.gender" name="gender">
+          <select class="value form-control"[(ngModel)]="updatedProfile.gender" name="gender">
             <option class="value" value="" disabled selected hidden>Select gender</option>
             <option class="value" *ngFor="let g of genderOptions" [value]="g.value">
               {{ g.label }}
@@ -146,28 +146,28 @@
       <div class="card">
         <label>
           <span class="label">Age</span>
-          <input class="value" type="number" [(ngModel)]="updatedProfile.age" name="age">
+          <input class="value form-control" type="number" [(ngModel)]="updatedProfile.age" name="age">
         </label>
       </div>
 
       <div class="card">
         <label>
           <span class="label">Weight</span>
-          <input class="value" type="number" [(ngModel)]="updatedProfile.weight" name="weight">
+          <input class="value form-control" type="number" [(ngModel)]="updatedProfile.weight" name="weight">
         </label>
       </div>
 
       <div class="card">
         <label>
           <span class="label">Height</span>
-          <input class="value" type="number" [(ngModel)]="updatedProfile.height" name="height">
+          <input class="value form-control" type="number" [(ngModel)]="updatedProfile.height" name="height">
         </label>
       </div>
     </div>
 
     <div class="btn-row">
-      <button type="submit" class="primary">Save</button>
-      <button type="button" (click)="isEditing = false">Cancel</button>
+      <button type="submit" class="app-btn">Save</button>
+      <button type="button" class="app-btn outline" (click)="isEditing = false">Cancel</button>
     </div>
   </form>
 
