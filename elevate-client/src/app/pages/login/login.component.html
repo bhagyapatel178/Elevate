@@ -1,16 +1,14 @@
 <div>
   <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
-    <h2 class="heading">Login</h2><br>
-    <input type='text' class="form-control" placeholder = 'Username' [(ngModel)]="credentials.username" name ='username' required><br>
+    <h2 class="heading">Login</h2>
+    <input type="text" class="form-control" placeholder="Username" [(ngModel)]="credentials.username" name="username" required>
     <div class="password-row">
-      <input [type] = "showPassword? 'text': 'password'" class="form-control" placeholder = 'Password ' [(ngModel)]="credentials.password" name ='password' required>
+      <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Password" [(ngModel)]="credentials.password" name="password" required>
       <button type="button" class="btn" (click)="showPassword = !showPassword">
-        {{showPassword?'Hide': 'Show'}}
+        {{ showPassword ? 'Hide' : 'Show' }}
       </button>
     </div>
-
-    <br>
-    <button class="enter btn" type='submit'>Login</button>
-    <div id="googleBtn"></div>
+    <button class="enter btn" type="submit">Login</button>
+    <div id="googleBtn" class="google"></div>
   </form>
 </div>
