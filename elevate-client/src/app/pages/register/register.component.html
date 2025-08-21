@@ -1,32 +1,28 @@
 <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
-  <h2 class="heading">Register</h2><br>
-  <div *ngIf="username.invalid && username.touched" style="color:red">
+  <h2 class="heading">Register</h2>
+
+  <div *ngIf="username.invalid && username.touched" class="error">
     Username must be 5–20 characters.
   </div>
-  <input type='text' class="form-control" placeholder='Username' [(ngModel)]="formData.username" name='username'
-         required minlength="5" maxlength="20"
-         #username="ngModel"><br>
+  <input type="text" class="form-control" placeholder="Username" [(ngModel)]="formData.username" name="username"
+         required minlength="5" maxlength="20" #username="ngModel">
 
-  <div *ngIf="email.invalid && email.touched" style="color:red">
+  <div *ngIf="email.invalid && email.touched" class="error">
     Valid email required.
   </div>
-  <input type='email' class="form-control" placeholder='Email' [(ngModel)]="formData.email" name='email'
-         required
-         #email="ngModel"><br>
+  <input type="email" class="form-control" placeholder="Email" [(ngModel)]="formData.email" name="email"
+         required #email="ngModel">
 
   <div class="password-row">
-    <div *ngIf="password.invalid && password.touched" style="color:red">
+    <div *ngIf="password.invalid && password.touched" class="error">
       Password must be at least 5 characters.
     </div>
-    <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder='Password' [(ngModel)]="formData.password" name='password'
-           required minlength="5"
-           #password="ngModel">
+    <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Password"
+           [(ngModel)]="formData.password" name="password" required minlength="5" #password="ngModel">
     <button type="button" class="btn" (click)="showPassword = !showPassword">{{ showPassword ? 'Hide' : 'Show' }}</button>
   </div>
-  <br>
 
-  <button type='submit' class="enter btn" [disabled]="registerForm.invalid">Register</button>
+  <button type="submit" class="enter btn" [disabled]="registerForm.invalid">Register</button>
 
-  <div id="googleBtn"></div>
+  <div id="googleBtn" class="google"></div>
 </form>
-
