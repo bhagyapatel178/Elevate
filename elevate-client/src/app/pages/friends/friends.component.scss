@@ -175,6 +175,8 @@ h3{
 
   .placeholder {
     flex: 1;                 /* grows to keep spacing — add info later */
+    padding-left: 1rem;
+    //align-self: center;
   }
 
   .compare-btn {

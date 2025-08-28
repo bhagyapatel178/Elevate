@@ -1,10 +1,8 @@
 package com.elevate.elevateapi.service;
 
-import com.elevate.elevateapi.dto.FriendResponse;
-import com.elevate.elevateapi.entity.Friend;
+import com.elevate.elevateapi.dto.friends.FriendResponse;
 import com.elevate.elevateapi.repository.FriendRepository;
 import com.elevate.elevateapi.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

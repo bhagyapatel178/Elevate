@@ -1,10 +1,8 @@
 package com.elevate.elevateapi.controller;
 
-import com.elevate.elevateapi.dto.CreateProgressLogRequest;
-import com.elevate.elevateapi.dto.ProgressLogResponse;
-import com.elevate.elevateapi.dto.UpdateProgressLogRequest;
-import com.elevate.elevateapi.dto.UpdateUserRequest;
-import com.elevate.elevateapi.entity.UserPrincipal;
+import com.elevate.elevateapi.dto.progresslogs.CreateProgressLogRequest;
+import com.elevate.elevateapi.dto.progresslogs.ProgressLogResponse;
+import com.elevate.elevateapi.dto.progresslogs.UpdateProgressLogRequest;
 import com.elevate.elevateapi.service.ProgressLogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

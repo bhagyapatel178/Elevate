@@ -1,6 +1,6 @@
 package com.elevate.elevateapi.service;
 
-import com.elevate.elevateapi.dto.IncomingFriendRequests;
+import com.elevate.elevateapi.dto.friends.IncomingFriendRequests;
 import com.elevate.elevateapi.entity.Friend;
 import com.elevate.elevateapi.entity.FriendRequest;
 import com.elevate.elevateapi.entity.User;

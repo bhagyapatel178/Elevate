@@ -1,6 +1,6 @@
 package com.elevate.elevateapi.controller;
 
-import com.elevate.elevateapi.dto.IncomingFriendRequests;
+import com.elevate.elevateapi.dto.friends.IncomingFriendRequests;
 import com.elevate.elevateapi.service.FriendRequestService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
