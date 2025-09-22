@@ -1,6 +1,6 @@
 package com.elevate.elevateapi.repository;
 
-import com.elevate.elevateapi.dto.IncomingFriendRequests;
+import com.elevate.elevateapi.dto.friends.IncomingFriendRequests;
 import com.elevate.elevateapi.entity.FriendRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +10,7 @@ import java.util.List;
 public interface FriendRequestRepository extends JpaRepository<FriendRequest,Long> {
 
     @Query("""
-    select new com.elevate.elevateapi.dto.IncomingFriendRequests(
+    select new com.elevate.elevateapi.dto.friends.IncomingFriendRequests(
         fr.id,
         fr.sender.id,
         fr.sender.username

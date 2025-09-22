@@ -150,37 +150,95 @@ h3{
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-width: 700px;          /* centre the stack */
+  max-width: 725px;          /* centre the stack */
   margin: 1.5rem auto 0;
 }
+
 
 .friend-card {
   position: relative;
   display: flex;
-  align-items: center;
+  //align-items: center;
   background: #f9f9f9;
   border-radius: 14px;
   //padding: 1rem 1.15rem;
-  padding: 1.25rem 1rem 5rem;      /* bottom space for compare btn */
+  //padding: 1.25rem 1rem 3rem;      /* bottom space for compare btn */
   box-shadow: 0 4px 14px rgba(0,0,0,.08);
+  //grid-template-columns: 260px 1fr 160px; /* left | middle | right */
+  gap: 24px;
+  padding: 28px 18px;
 
-  h4 {
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+
+  /* vertical separators */
+  .left-col {
+    border-right: 2px solid #e9e9e9;
+    padding-right: 22px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .username {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .last-went {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      border-top: 2px solid #e9e9e9;
+      margin-top: 0.2rem;
+      padding: 0.5rem;
+      .caption {font-size:0.9rem; color: #6a6a6a; margin-bottom: 4px;}
+      .value {
+        align-items: baseline;
+        gap: 8px;
+
+        .lg { font-weight: 600; font-size: 1.4rem; }
+        .sm { color: #6a6a6a; font-size: .9rem; }}
+
+    }
   }
 
-  .placeholder {
+
+  .middle-col {
     flex: 1;                 /* grows to keep spacing — add info later */
+    //padding-left: 0.6rem;
+    //align-self: center;
+
+    .mr-title { color: #7a7a7a; font-weight: 600; margin-bottom: 6px;}
+    .lift-name { font-weight: 700; margin-bottom: 10px; align-self: center;}
+
+    .set-pills {
+      //display: table-column; flex-wrap: wrap; gap: 8px;
+      gap: 4px;
+      .pill {
+        display: inline-flex; align-items: center; gap: 6px;
+        //gap: 4px;
+        width: fit-content;
+        background: #fff; border: 1px solid #e5e5e5; border-radius: 15px;
+        padding: 6px 10px; font-size: .9rem; box-shadow: 0 2px 6px rgba(0,0,0,.06);
+        .pill-set { font-weight: 700; }
+        .sep { opacity: .6; }
+      }
+    }
+
+    .muted { color: #888; font-style: italic; }
+
   }
 
   .compare-btn {
       position: absolute;
-      bottom: 10px;
-      right: 14px;
+      bottom: 5px;
+      right: 0px;
       font-size: .9rem;
       background: none;
       border: none;

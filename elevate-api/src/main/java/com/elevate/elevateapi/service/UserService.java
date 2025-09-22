@@ -1,6 +1,12 @@
 package com.elevate.elevateapi.service;
 
-import com.elevate.elevateapi.dto.*;
+import com.elevate.elevateapi.dto.friends.UserSearchResult;
+import com.elevate.elevateapi.dto.logins.GoogleToken;
+import com.elevate.elevateapi.dto.logins.LoginUserRequest;
+import com.elevate.elevateapi.dto.logins.RegisterUserRequest;
+import com.elevate.elevateapi.dto.progresslogs.ProgressLogResponse;
+import com.elevate.elevateapi.dto.user.UpdateUserRequest;
+import com.elevate.elevateapi.dto.user.UserProfileResponse;
 import com.elevate.elevateapi.entity.ProgressLog;
 import com.elevate.elevateapi.entity.User;
 import com.elevate.elevateapi.repository.ProgressLogRepository;

@@ -1,6 +1,12 @@
 package com.elevate.elevateapi.controller;
 
-import com.elevate.elevateapi.dto.*;
+import com.elevate.elevateapi.dto.friends.UserSearchResult;
+import com.elevate.elevateapi.dto.logins.GoogleToken;
+import com.elevate.elevateapi.dto.logins.LoginUserRequest;
+import com.elevate.elevateapi.dto.logins.RegisterUserRequest;
+import com.elevate.elevateapi.dto.progresslogs.ProgressLogResponse;
+import com.elevate.elevateapi.dto.user.UpdateUserRequest;
+import com.elevate.elevateapi.dto.user.UserProfileResponse;
 import com.elevate.elevateapi.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -14,9 +14,21 @@ interface IncomingRequest {
   senderUsername: string;
 }
 
+interface LiftSet {
+  weightKg: number;
+  reps: number;
+}
+
+interface MostRecentLift {
+  liftName: string;
+  sets: LiftSet[];
+}
+
 interface FriendResponse {
   id: number;
   username: string;
+  lastWorkoutAt: string|null;
+  mostRecentLift: MostRecentLift|null;
 }
 
 @Component({
@@ -136,7 +148,26 @@ export class FriendsComponent implements OnInit{
       });
   }
 
+  daysAgoParts(iso: string | null): { big: string; small: string } {
+    if (!iso) return { big: '—', small: "hasn't logged yet" };
 
+    const d = new Date(iso + 'T00:00:00');
+    const today = new Date(); today.setHours(0,0,0,0);
+    const diffDays = Math.floor((today.getTime() - d.getTime()) / 86400000);
+
+    if (diffDays <= 0)  return { big: 'Today',     small: '' };
+    if (diffDays === 1) return { big: 'Yesterday', small: '' };
+    return { big: String(diffDays), small: 'days ago' };
+  }
+
+
+  humanizeLift(liftName: string, variation?: string | null): string {
+    const nice = liftName
+      .split('_')
+      .map(w => w.charAt(0) + w.slice(1).toLowerCase())
+      .join(' ');
+    return variation && variation.trim() ? `${nice} (${variation.trim()})` : nice;
+  }
   // display info about users
   // when searching, show either friends, sent a request already, neither...
   // style friends page

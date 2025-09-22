@@ -1,6 +1,6 @@
-package com.elevate.elevateapi.dto;
+package com.elevate.elevateapi.dto.user;
 
-public record UserProfileResponse (
+public record UpdateUserRequest (
         String username,
         String email,
         String gender,
@@ -9,4 +9,3 @@ public record UserProfileResponse (
         Double height,
         Double weight
 ){}
-

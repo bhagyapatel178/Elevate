@@ -1,4 +1,4 @@
-package com.elevate.elevateapi.dto;
+package com.elevate.elevateapi.dto.progresslogs;
 
 import java.time.LocalDate;
 

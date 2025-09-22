@@ -1,8 +1,8 @@
 package com.elevate.elevateapi.service;
 
-import com.elevate.elevateapi.dto.CreateProgressLogRequest;
-import com.elevate.elevateapi.dto.ProgressLogResponse;
-import com.elevate.elevateapi.dto.UpdateProgressLogRequest;
+import com.elevate.elevateapi.dto.progresslogs.CreateProgressLogRequest;
+import com.elevate.elevateapi.dto.progresslogs.ProgressLogResponse;
+import com.elevate.elevateapi.dto.progresslogs.UpdateProgressLogRequest;
 import com.elevate.elevateapi.entity.ProgressLog;
 import com.elevate.elevateapi.entity.User;
 import com.elevate.elevateapi.repository.ProgressLogRepository;

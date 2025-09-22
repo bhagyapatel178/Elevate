@@ -1,6 +1,6 @@
-package com.elevate.elevateapi.dto;
+package com.elevate.elevateapi.dto.progresslogs;
 
-public record CreateProgressLogRequest (
+public record UpdateProgressLogRequest (
         String liftType,
         String variation,
         Double weight,

@@ -1,6 +1,6 @@
 package com.elevate.elevateapi.repository;
 
-import com.elevate.elevateapi.dto.FriendResponse;
+import com.elevate.elevateapi.dto.friends.FriendResponse;
 import com.elevate.elevateapi.entity.Friend;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -18,14 +18,13 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
 
 
     @Query("""
-        select new com.elevate.elevateapi.dto.FriendResponse(
-            u.id, u.username)
+        select u.id
         from Friend f
         join User u on
              (u.id = f.user.id   and f.friend.id = :id)
           or (u.id = f.friend.id and f.user.id   = :id)
     """)
-    List<FriendResponse> findFriendsOf(@Param("id") Long id);
+    List<Long> findFriendsOf(@Param("id") Long id);
 
     @Modifying
     @Transactional
