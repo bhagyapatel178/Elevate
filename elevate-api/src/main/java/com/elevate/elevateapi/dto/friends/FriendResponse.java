@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public record FriendResponse(
         Long id,
-        String username
-//        LocalDate date
-//        List<String LiftType, Integer weight, Integer reps> recentLifts
+        String username,
+        LocalDate lastWorkoutAt,           // null if never trained
+        MostRecentLift mostRecentLift       // null if no logs on that date
 ){}

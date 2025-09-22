@@ -18,14 +18,13 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
 
 
     @Query("""
-        select new com.elevate.elevateapi.dto.friends.FriendResponse(
-            u.id, u.username)
+        select u.id
         from Friend f
         join User u on
              (u.id = f.user.id   and f.friend.id = :id)
           or (u.id = f.friend.id and f.user.id   = :id)
     """)
-    List<FriendResponse> findFriendsOf(@Param("id") Long id);
+    List<Long> findFriendsOf(@Param("id") Long id);
 
     @Modifying
     @Transactional

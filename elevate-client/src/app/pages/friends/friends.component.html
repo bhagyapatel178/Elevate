@@ -46,22 +46,87 @@
   <div class="friend-list" *ngIf="friends.length; else noFriends">
     <article *ngFor="let f of friends" class="friend-card">
 
-      <button class="menu-btn btn"
-              (click)="toggleMenu(f.id, 'friend')">⋮</button>
-<!--      ⋯-->
-      <h4>{{ f.username }}</h4>
+      <!-- right-top menu -->
+      <button class="menu-btn btn" (click)="toggleMenu(f.id, 'friend')">⋮</button>
 
-      <!-- room in the middle for future info -->
-      <div class="placeholder"> Most Recent Lift<!-- empty for now --> </div>
+      <!-- left column --------------------------------------------------->
+      <div class="left-col">
+        <h4 class="username">{{ f.username }}</h4>
+<!--        …-->
+        <div class="last-went">
+          <div class="caption">went gym</div>
+          <div class="value">
+            <span class="lg">{{ daysAgoParts(f.lastWorkoutAt).big }}</span>
+            <span class="sm" *ngIf="daysAgoParts(f.lastWorkoutAt).small">
+        {{ daysAgoParts(f.lastWorkoutAt).small }}
+      </span>
+          </div>
+        </div>
+      </div>
 
-      <button class="compare-btn btn"
-              (click)="compareWith(f.id)">Compare →</button>
+      <!-- middle column ------------------------------------------------->
+      <div class="middle-col">
+
+        <div class="mr-title">Most recent lift:</div>
+        <ng-container *ngIf="f.mostRecentLift; else noLift">
+          <div class="lift-name">
+            {{ humanizeLift(f.mostRecentLift!.liftName) }}
+          </div>
+
+          <div class="set-pills">
+            <div class="pill" *ngFor="let s of f.mostRecentLift!.sets; let i = index">
+              <span class="pill-set">Set {{ i + 1 }}</span>
+              <span class="sep">•</span>
+              <span class="pill-weight">{{ s.weightKg }}kg</span>
+              <span class="sep">×</span>
+              <span class="pill-reps">{{ s.reps }} reps</span>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #noLift>
+          <div class="muted">No lifts recorded on last session.</div>
+        </ng-template>
+      </div>
+
+      <!-- right column -------------------------------------------------->
+      <div class="right-col">
+        <button class="compare-btn btn" (click)="compareWith(f.id)">Compare →</button>
+      </div>
 
       <!-- pop-over -->
-      <div class="popover"
-           *ngIf="openMenuId===f.id && openMenuType==='friend'">
-        <button class="btn" (click)="removeFriend(f.id)">Remove friend</button>
+      <div class="popover" *ngIf="openMenuId===f.id && openMenuType==='friend'">
+        <button class="btn danger" (click)="removeFriend(f.id)">Remove friend</button>
       </div>
+<!--      <button class="menu-btn btn"-->
+<!--              (click)="toggleMenu(f.id, 'friend')">⋮</button>-->
+<!--&lt;!&ndash;      ⋯&ndash;&gt;-->
+<!--      <h4>{{ f.username }}</h4>-->
+<!--      &lt;!&ndash; New: last workout line &ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="subline">&ndash;&gt;-->
+<!--&lt;!&ndash;        Last went gym: {{ daysAgoLabel(f.lastWorkoutAt) }}&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      &lt;!&ndash; New: most recent lift and sets &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="most-recent" *ngIf="f.mostRecentLift; else noLift">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="title">Most recent lift: {{ f.mostRecentLift!.liftName }}</div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <ul class="sets">&ndash;&gt;-->
+<!--&lt;!&ndash;          <li *ngFor="let s of f.mostRecentLift!.sets; let i = index">&ndash;&gt;-->
+<!--&lt;!&ndash;            Set {{ i + 1 }} — {{ s.weightKg }} kg × {{ s.reps }} Reps&ndash;&gt;-->
+<!--&lt;!&ndash;          </li>&ndash;&gt;-->
+<!--&lt;!&ndash;        </ul>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      <ng-template #noLift>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="muted">No lifts recorded on last session.</div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </ng-template>&ndash;&gt;-->
+<!--      <button class="compare-btn btn"-->
+<!--              (click)="compareWith(f.id)">Compare →</button>-->
+
+<!--      &lt;!&ndash; pop-over &ndash;&gt;-->
+<!--      <div class="popover"-->
+<!--           *ngIf="openMenuId===f.id && openMenuType==='friend'">-->
+<!--        <button class="btn" (click)="removeFriend(f.id)">Remove friend</button>-->
+<!--      </div>-->
     </article>
   </div>
 
